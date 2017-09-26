@@ -2119,8 +2119,8 @@ def bunkers_storm_motion(prof, **kwargs):
     muel = mupcl.elhght
     if not pbot:
         pbot, ptop = effective_inflow_layer(prof, 100, -250, mupcl=mupcl)
-    base = interp.to_agl(prof, interp.hght(prof, pbot))
-    if mucape > 100. and utils.QC(muel):
+    if pbot and mucape > 100. and utils.QC(muel):
+        base = interp.to_agl(prof, interp.hght(prof, pbot))
         depth = muel - base
         htop = base + ( depth * (65./100.) )
         ptop = interp.pres(prof, interp.to_msl(prof, htop))
