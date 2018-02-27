@@ -1277,6 +1277,9 @@ def parcelTraj(prof, parcel, smu=None, smv=None):
         x_0 = x_1
         t_0 = t_1
         p_0 = interp.pres(prof, interp.to_msl(prof, z_1))
+        if ma.is_masked(p_0):
+            print "p_0 is masked. Can't continue slinky"
+            break
         
         # Update parcel vertical velocity
         w_0 = w_1
