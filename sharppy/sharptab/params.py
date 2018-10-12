@@ -1990,8 +1990,11 @@ def bulk_rich(prof, pcl):
         pcl.brn = ma.masked
         pcl.brnu = ma.masked
         pcl.brnv = ma.masked
-        # Had to uncomment to work with mpasrt/uni/2018030500/N15E121.201803050000.snd
-        # Ahijevych Mar 6 2018
+        pcl.brnshear = ma.masked
+        pcl.brnu = ma.masked
+        pcl.brnv = ma.masked
+        pcl.brn = ma.masked
+
         return pcl
     
     # Calculate the lowest 500m mean wind
@@ -2736,13 +2739,15 @@ def mburst(prof):
         Below is taken from the SPC Mesoanalysis:
         The Microburst Composite is a weighted sum of the following individual parameters: SBCAPE, SBLI,
         lapse rates, vertical totals (850-500 mb temperature difference), DCAPE, and precipitable water.
-        The specific terms and weights are listed below:
-
 
         All of the terms are summed to arrive at the final microburst composite value.
         The values can be interpreted in the following manner: 3-4 infers a "slight chance" of a microburst;
         5-8 infers a "chance" of a microburst; >= 9 infers that microbursts are "likely".
         These values can also be viewed as conditional upon the existence of a storm.
+	
+	This code was updated on 9/11/2018 - TT was being used in the function instead of VT.
+	The original SPC code was checked to confirm this was the problem.
+	This error was not identified during the testing phase for some reason.
 
         Parameters
         ----------
@@ -2756,7 +2761,7 @@ def mburst(prof):
 
     sbpcl = getattr(prof, 'sfcpcl', parcelx(prof, flag=1))
     lr03 = getattr(prof, 'lapserate_3km', lapse_rate( prof, 0., 3000., pres=False ))
-    tt = getattr(prof, 'totals_totals', t_totals( prof ))
+    vt = getattr(prof, 'vertical_totals', v_totals(prof))
     dcape_val = getattr(prof, 'dcape', dcape( prof )[0])
     pwat = getattr(prof, 'pwat', precip_water( prof ))
     tei_val = thetae_diff(prof)
@@ -2827,18 +2832,18 @@ def mburst(prof):
         else:
             lr03_term = 1
 
-    # Vertical Total Totals term
-    if not utils.QC(tt):
-        tt_term = np.nan
+    # Vertical Totals term
+    if not utils.QC(vt):
+        vt_term = np.nan
     else:
-        if tt < 27:
-            tt_term = 0
-        elif tt >= 27 and tt < 28:
-            tt_term = 1
-        elif tt >= 28 and tt < 29:
-            tt_term = 2
+        if vt < 27:
+            vt_term = 0
+        elif vt >= 27 and vt < 28:
+            vt_term = 1
+        elif vt >= 28 and vt < 29:
+            vt_term = 2
         else:
-            tt_term = 3
+            vt_term = 3
 
     # TEI term?
     if not utils.QC(tei_val):
@@ -2849,7 +2854,7 @@ def mburst(prof):
         else:
             ted = 0
 
-    mburst = te + sbcape_term + sbli_term + pwat_term + dcape_term + lr03_term + tt_term + ted
+    mburst = te + sbcape_term + sbli_term + pwat_term + dcape_term + lr03_term + vt_term + ted
 
     if mburst < 0:
         mburst = 0
@@ -2905,6 +2910,10 @@ def sweat(prof):
         4.) 500 mb wind speed
         5.) Direction of wind at 500
         6.) Direction of wind at 850
+	
+	Formulation taken from 
+	Notes on Analysis and Severe-Storm Forecasting Procedures of the Air Force Global Weather Central, 1972
+	by RC Miller.
 
         Parameters
         ----------
@@ -2933,7 +2942,7 @@ def sweat(prof):
 
     term3 = 2 * vec850[1]
     term4 = vec500[1]
-    if vec500[0] - vec850[0] > 0:
+    if 130 <= vec850[0] and 250 >= vec850[0] and 210 <= vec500[0] and 310 >= vec500[0] and vec500[0] - vec850[0] > 0 and vec850[1] >= 15 and vec500[1] >= 15:
         term5 = 125 * (np.sin( np.radians(vec500[0] - vec850[0])  + 0.2))
     else:
         term5 = 0
