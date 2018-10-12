@@ -1990,7 +1990,9 @@ def bulk_rich(prof, pcl):
         pcl.brn = ma.masked
         pcl.brnu = ma.masked
         pcl.brnv = ma.masked
-    #return pcl
+        # Had to uncomment to work with mpasrt/uni/2018030500/N15E121.201803050000.snd
+        # Ahijevych Mar 6 2018
+        return pcl
     
     # Calculate the lowest 500m mean wind
     p = interp.pres(prof, interp.hght(prof, pbot)+500.)
