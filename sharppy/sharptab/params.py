@@ -5,6 +5,21 @@ import numpy.ma as ma
 from sharppy.sharptab import interp, utils, thermo, winds
 from sharppy.sharptab.constants import *
 
+'''
+    This file contains various functions to perform the calculation of various convection indices.
+    Because of this, parcel lifting routines are also found in this file.
+
+    Functions denoted with a (*) in the docstring refer to functions that were added to the SHARPpy package that 
+    were not ported from the Storm Prediction Center.  They have been included as they have been used by the 
+    community in an effort to expand SHARPpy to support the many parameters used in atmospheric science. 
+    
+    While the logic for these functions are based in the scientific literature, validation
+    of the output from these functions is occasionally difficult to perform.  Although we have made an effort
+    to resolve code issues when they arise, values from these functions may be erronious and may require additional 
+    inspection by the user.  We appreciate any contributions by the meteorological community that can
+    help better validate these SHARPpy functions!
+    
+'''
 
 __all__ = ['DefineParcel', 'Parcel', 'inferred_temp_advection']
 __all__ += ['k_index', 't_totals', 'c_totals', 'v_totals', 'precip_water']
@@ -313,7 +328,7 @@ def dgz(prof):
 
 def lhp(prof):
     '''
-        Large Hail Parameter
+        Large Hail Parameter (*)
 
         From Johnson and Sugden (2014), EJSSM
 
@@ -2267,7 +2282,7 @@ def esp(prof, **kwargs):
 
 def sherb(prof, **kwargs):
     '''
-        Severe Hazards In Environments with Reduced Buoyancy (SHERB) Parameter
+        Severe Hazards In Environments with Reduced Buoyancy (SHERB) Parameter (*)
 
         A composite parameter designed to assist forecasters in the High-Shear
         Low CAPE (HSLC) environment.  This allows better discrimination 
@@ -2308,7 +2323,7 @@ def sherb(prof, **kwargs):
     if effective == False:
         p3km = interp.pres(prof, interp.to_msl(prof, 3000))
         sfc_pres = prof.pres[prof.get_sfc()]
-        shear = utils.KTS2MS(winds.wind_shear(prof, pbot=sfc_pres, ptop=p3km))
+        shear = utils.KTS2MS(utils.mag(*winds.wind_shear(prof, pbot=sfc_pres, ptop=p3km)))
         sherb = ( shear / 26. ) * ( lr03 / 5.2 ) * ( lr75 / 5.6 )
     else:
         if hasattr(prof, 'ebwd'):
@@ -2347,7 +2362,6 @@ def sherb(prof, **kwargs):
             # because there's no information about how to get the
             # inflow layer, return missing.
             return prof.missing
-        
         shear = utils.KTS2MS(utils.mag( prof.ebwd[0], prof.ebwd[1] ))
         sherb = ( shear / 27. ) * ( lr03 / 5.2 ) * ( lr75 / 5.6 )
 
@@ -2614,7 +2628,7 @@ def dcape(prof):
 
 def precip_eff(prof, **kwargs):
     '''
-        Precipitation Efficiency
+        Precipitation Efficiency (*)
 
         This calculation comes from Noel and Dobur 2002, published
         in NWA Digest Vol 26, No 34.
@@ -2687,7 +2701,7 @@ def pbl_top(prof):
 
 def dcp(prof):
     '''
-        Derecho Composite Parameter
+        Derecho Composite Parameter (*)
 
         This parameter is based on a data set of 113 derecho events compiled by Evans and Doswell (2001).
         The DCP was developed to identify environments considered favorable for cold pool "driven" wind
@@ -2900,7 +2914,7 @@ def ehi(prof, pcl, hbot, htop, stu=0, stv=0):
 
 def sweat(prof):
     '''
-        SWEAT Index
+        SWEAT Index (*)
 
         Computes the SWEAT (Severe Weather Threat Index) using the following numbers:
 
@@ -2943,7 +2957,7 @@ def sweat(prof):
     term3 = 2 * vec850[1]
     term4 = vec500[1]
     if 130 <= vec850[0] and 250 >= vec850[0] and 210 <= vec500[0] and 310 >= vec500[0] and vec500[0] - vec850[0] > 0 and vec850[1] >= 15 and vec500[1] >= 15:
-        term5 = 125 * (np.sin( np.radians(vec500[0] - vec850[0])  + 0.2))
+        term5 = 125 * (np.sin( np.radians(vec500[0] - vec850[0])) + 0.2)
     else:
         term5 = 0
 
