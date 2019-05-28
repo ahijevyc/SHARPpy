@@ -3,9 +3,9 @@ import numpy as np
 
 import sharppy.sharptab.profile as profile
 import sharppy.sharptab.prof_collection as prof_collection
-from decoder import Decoder
+from .decoder import Decoder
 
-from StringIO import StringIO
+from io import StringIO
 from datetime import datetime
 
 __fmtname__ = "spc"

@@ -1,5 +1,5 @@
 
-import urllib2
+import urllib.request, urllib.error, urllib.parse
 import re
 import glob, os
 import numpy as np
@@ -15,7 +15,7 @@ def _download_spc():
     global spc_time, spc_text
     now = datetime.utcnow()
     if spc_time is None or spc_time < now - cache_len:
-        url_obj = urllib2.urlopen(spc_base_url)
+        url_obj = urllib.request.urlopen(spc_base_url)
         spc_text = url_obj.read()
 
         spc_time = now
@@ -55,7 +55,7 @@ def _availableat_spc(dt):
             An array that contains all of the three letter station identfiers.
     '''
     recent_url = "%s%s/" % (spc_base_url, dt.strftime('%y%m%d%H_OBS'))
-    text = urllib2.urlopen(recent_url).read()
+    text = urllib.request.urlopen(recent_url).read()
     matches = re.findall("show_soundings\(\"([\w]{3}|[\d]{5})\"\)", text)
     return matches
 
@@ -78,7 +78,7 @@ def _download_psu():
     global psu_time, psu_text
     now = datetime.utcnow()
     if psu_time is None or psu_time < now - cache_len:
-        url_obj = urllib2.urlopen(psu_base_url)
+        url_obj = urllib.request.urlopen(psu_base_url)
         psu_text = url_obj.read()
 
         psu_time = now
@@ -104,7 +104,7 @@ def _availableat_psu(model, dt):
 
     cycle = dt.hour
     url = "%s%s/%02d/" % (psu_base_url, model.upper(), cycle)
-    url_obj = urllib2.urlopen(url)
+    url_obj = urllib.request.urlopen(url)
     text = url_obj.read()
 
     stns = re.findall("%s_(.+)\.buf" % _repl[model], text)
@@ -139,14 +139,14 @@ pecan_base_url = 'http://weather.ou.edu/~map/real_time_data/PECAN/'
 #http://weather.ou.edu/~map/real_time_data/PECAN/2015061112/soundings/TOP_2015061113.txt
 
 def _available_oupecan():
-    text = urllib2.urlopen(pecan_base_url).read()
+    text = urllib.request.urlopen(pecan_base_url).read()
     matches = sorted(list(set(re.findall("([\d]{10})", text))))
     return [ datetime.strptime(m, "%Y%m%d%H") for m in matches ]
 
 def _availableat_oupecan(dt):
     dt_string = datetime.strftime(dt, '%Y%m%d%H')
     url = "%s%s/soundings/" % (pecan_base_url, dt_string)
-    url_obj = urllib2.urlopen(url)
+    url_obj = urllib.request.urlopen(url)
     text = url_obj.read()
     dt_string = datetime.strftime(dt, '%Y%m%d%H')
     stns = re.findall("([\w]{3})_%s.txt" % dt_string, text)
@@ -156,7 +156,7 @@ def _availableat_oupecan(dt):
 ncarens_base_url = 'http://sharp.weather.ou.edu/soundings/ncarens/'
 
 def _available_ncarens():
-    text = urllib2.urlopen(ncarens_base_url).read()
+    text = urllib.request.urlopen(ncarens_base_url).read()
 
     matches = sorted(list(set(re.findall("([\d]{8}_[\d]{2})", text))))
     return [ datetime.strptime(m, '%Y%m%d_%H') for m in matches ]
@@ -164,7 +164,7 @@ def _available_ncarens():
 def _availableat_ncarens(dt):
     dt_string = datetime.strftime(dt, '%Y%m%d_%H')
     url = "%s%s/" % (ncarens_base_url, dt_string)
-    url_obj = urllib2.urlopen(url)
+    url_obj = urllib.request.urlopen(url)
     text = url_obj.read()
 
     dt_string = datetime.strftime(dt, '%Y%m%d%H')
@@ -216,8 +216,8 @@ if __name__ == "__main__":
     #dt = available['spc']['observed']()
     #stns = availableat['spc']['observed'](dt[-1])
     dt = available['ou_pecan']['pecan ensemble']()
-    print dt
+    print(dt)
     stns = availableat['ou_pecan']['pecan ensemble'](dt[-2])
-    print stns
+    print(stns)
     dt = available['vse']['vse']()
-    print dt
+    print(dt)

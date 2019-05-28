@@ -1,5 +1,5 @@
 ''' Thermodynamic Parameter Routines '''
-from __future__ import division
+
 import numpy as np
 import numpy.ma as ma
 from sharppy.sharptab import interp, utils, thermo, winds
@@ -766,7 +766,7 @@ def inferred_temp_adv(prof, lat=35):
 
     multiplier = (f / 9.81) * (np.pi / 180.) # Units: (s**-1 / (m/s**2)) * (radians/degrees)
 
-    for i in xrange(1, len(pressures)):
+    for i in range(1, len(pressures)):
         bottom_pres = pressures[i-1]
         top_pres = pressures[i]
         # Get the temperatures from both levels (in Kelvin)
@@ -1293,7 +1293,7 @@ def parcelTraj(prof, parcel, smu=None, smv=None):
         t_0 = t_1
         p_0 = interp.pres(prof, interp.to_msl(prof, z_1))
         if ma.is_masked(p_0):
-            print "p_0 is masked. Can't continue slinky"
+            print("p_0 is masked. Can't continue slinky")
             break
         
         # Update parcel vertical velocity
@@ -1446,7 +1446,7 @@ def cape(prof, pbot=None, ptop=None, dp=-1, **kwargs):
     tp1 = thermo.wetlift(pe2, tp2, pe1)
     lyre = 0
     lyrlast = 0
-    for i in xrange(lptr, prof.pres.shape[0]):
+    for i in range(lptr, prof.pres.shape[0]):
         if not utils.QC(prof.tmpc[i]): continue
         pe2 = prof.pres[i]
         h2 = prof.hght[i]
@@ -2078,7 +2078,7 @@ def effective_inflow_layer(prof, ecape=100, ecinh=-250, **kwargs):
     if mucape != 0:
         if mucape >= ecape and mucinh > ecinh:
             # Begin at surface and search upward for effective surface
-            for i in xrange(prof.sfc, prof.top):
+            for i in range(prof.sfc, prof.top):
                 pcl = cape(prof, pres=prof.pres[i], tmpc=prof.tmpc[i], dwpc=prof.dwpc[i])
                 if pcl.bplus >= ecape and pcl.bminus > ecinh:
                     pbot = prof.pres[i]
@@ -2089,7 +2089,7 @@ def effective_inflow_layer(prof, ecape=100, ecinh=-250, **kwargs):
 
             bptr = i
             # Keep searching upward for the effective top
-            for i in xrange(bptr+1, prof.top):
+            for i in range(bptr+1, prof.top):
                 if not prof.dwpc[i] or not prof.tmpc[i]:
                     continue
                 pcl = cape(prof, pres=prof.pres[i], tmpc=prof.tmpc[i], dwpc=prof.dwpc[i])
@@ -2417,8 +2417,8 @@ def mmp(prof, **kwargs):
     pbots = interp.pres(prof, prof.hght[lowest_idx])
     ptops = interp.pres(prof, prof.hght[highest_idx])
 
-    for b in xrange(len(pbots)):
-        for t in xrange(len(ptops)):
+    for b in range(len(pbots)):
+        for t in range(len(ptops)):
             if b < t: continue
             u_shear, v_shear = winds.wind_shear(prof, pbot=pbots[b], ptop=ptops[t])
             possible_shears[b,t] = utils.mag(u_shear, v_shear)
@@ -2598,7 +2598,7 @@ def dcape(prof):
 
     # Lower the parcel to the surface moist adiabatically and compute
     # total energy (DCAPE)
-    iter_ranges = xrange(uptr, -1, -1)
+    iter_ranges = range(uptr, -1, -1)
     ttraces = ma.zeros(len(iter_ranges))
     ptraces = ma.zeros(len(iter_ranges))
     ttraces[:] = ptraces[:] = ma.masked
@@ -2694,7 +2694,7 @@ def pbl_top(prof):
     try:
         level = np.where(thetav[prof.sfc]+.5 < thetav)[0][0]
     except IndexError:
-        print "Warning: PBL top could not be found."
+        print("Warning: PBL top could not be found.")
         level = thetav.shape[0] - 1
 
     return prof.pres[level]

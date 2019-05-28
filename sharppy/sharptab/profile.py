@@ -1,5 +1,5 @@
 ''' Create the Sounding (Profile) Object '''
-from __future__ import division
+
 import numpy as np
 import numpy.ma as ma
 import getpass
@@ -166,7 +166,7 @@ class Profile(object):
         snd_file.write("   LEVEL       HGHT       TEMP       DWPT       WDIR       WSPD\n")
         snd_file.write("-------------------------------------------------------------------\n")
         snd_file.write("%RAW%\n")
-        for idx in xrange(self.pres.shape[0]):
+        for idx in range(self.pres.shape[0]):
             str = ""
             for col in ['pres', 'hght', 'tmpc', 'dwpc', 'wdir', 'wspd']:
                 str += "%8.2f,  " % qc(self.__dict__[col][idx])

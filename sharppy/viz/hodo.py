@@ -42,7 +42,7 @@ class backgroundHodo(QtGui.QFrame):
         self.scale = (self.brx - self.tlx) / self.hodomag
         ## ring increment
         self.ring_increment = 10
-        self.rings = xrange(self.ring_increment, 100+self.ring_increment,
+        self.rings = range(self.ring_increment, 100+self.ring_increment,
             self.ring_increment)
         if self.physicalDpiX() > 75:
             fsize = 7
@@ -109,7 +109,7 @@ class backgroundHodo(QtGui.QFrame):
         ## get the maximum speed value in the frame for the ring increment.
         ## this is to help reduce drawing resources
         max_uv = int(self.pix_to_uv(self.brx, 0)[0])
-        self.rings = xrange(self.ring_increment, max_uv+self.ring_increment,
+        self.rings = range(self.ring_increment, max_uv+self.ring_increment,
                            self.ring_increment)
         ## reassign the new scale
         self.scale = (self.brx - self.tlx) / self.hodomag
@@ -949,7 +949,7 @@ class plotHodo(backgroundHodo):
         for idx, prof_coll in enumerate(self.prof_collections):
             # Draw all unhighlighed members
             if prof_coll.getCurrentDate() == cur_dt:
-                proflist = prof_coll.getCurrentProfs().values()
+                proflist = list(prof_coll.getCurrentProfs().values())
 
                 if idx == self.pc_idx:
                     for prof in proflist:
@@ -1220,7 +1220,7 @@ class plotHodo(backgroundHodo):
         seg_y = [ tab.interp.generic_interp_hght(bnd, z, yy) for bnd in seg_bnds if bnd <= z.max() ]
 
         seg_idxs = np.searchsorted(z, seg_bnds)
-        for idx in xrange(len(seg_x) - 1):
+        for idx in range(len(seg_x) - 1):
             ## define a pen to draw with
             pen = QtGui.QPen(colors[idx], penwidth)
             pen.setStyle(QtCore.Qt.SolidLine)
@@ -1228,7 +1228,7 @@ class plotHodo(backgroundHodo):
 
             path = QPainterPath()
             path.moveTo(seg_x[idx], seg_y[idx])
-            for z_idx in xrange(seg_idxs[idx] + 1, seg_idxs[idx + 1]):
+            for z_idx in range(seg_idxs[idx] + 1, seg_idxs[idx + 1]):
                 path.lineTo(xx[z_idx], yy[z_idx])
             path.lineTo(seg_x[idx + 1], seg_y[idx + 1])
 
@@ -1268,7 +1268,7 @@ class plotHodo(backgroundHodo):
         seg_y = [ tab.interp.generic_interp_hght(bnd, z, yy) for bnd in seg_bnds if bnd <= z.max() ]
 
         seg_idxs = np.searchsorted(z, seg_bnds)
-        for idx in xrange(len(seg_x) - 1):
+        for idx in range(len(seg_x) - 1):
             ## define a pen to draw with
             pen = QtGui.QPen(QtGui.QColor(color), penwidth)
             pen.setStyle(QtCore.Qt.SolidLine)
@@ -1276,7 +1276,7 @@ class plotHodo(backgroundHodo):
 
             path = QPainterPath()
             path.moveTo(seg_x[idx], seg_y[idx])
-            for z_idx in xrange(seg_idxs[idx] + 1, seg_idxs[idx + 1]):
+            for z_idx in range(seg_idxs[idx] + 1, seg_idxs[idx + 1]):
                 path.lineTo(xx[z_idx], yy[z_idx])
             path.lineTo(seg_x[idx + 1], seg_y[idx + 1])
 
