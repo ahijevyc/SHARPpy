@@ -144,7 +144,7 @@ def pwv_climo(prof, station, month=None):
     if pwv_means is np.ma.masked:
         return 0
     elif pwv_means is None:
-	return 0
+        return 0
     month_mean = float(pwv_means[month-1])
     month_std = float(pwv_stds[month-1])
 
