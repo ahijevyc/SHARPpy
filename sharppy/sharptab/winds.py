@@ -11,7 +11,8 @@ __all__ += ['sr_wind', 'sr_wind_npw', 'wind_shear', 'helicity', 'max_wind']
 __all__ += ['non_parcel_bunkers_motion', 'corfidi_mcs_motion', 'mbe_vectors']
 __all__ += ['non_parcel_bunkers_motion_experimental', 'critical_angle']
 
-warnings.warn("Future versions of the routines in the winds module may include options to use height values instead of pressure to specify layers (i.e. SRH, wind shear, etc.)")
+# Ahijevych - this warning is annoying.
+#warnings.warn("Future versions of the routines in the winds module may include options to use height values instead of pressure to specify layers (i.e. SRH, wind shear, etc.)")
 
 def mean_wind(prof, pbot=850, ptop=250, dp=-1, stu=0, stv=0):
     '''
