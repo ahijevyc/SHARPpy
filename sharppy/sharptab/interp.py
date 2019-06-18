@@ -50,7 +50,8 @@ def hght(prof, p):
     # routine to be in ascending order. Because pressure decreases in the
     # vertical, we must reverse the order of the two arrays to satisfy
     # this requirement.
-    return generic_interp_pres(np.log10(p), prof.logp[::-1], prof.hght[::-1])
+    # Avoid log10 of zero warning by using ma.log10() not np.log10().
+    return generic_interp_pres(ma.log10(p), prof.logp[::-1], prof.hght[::-1])
 
 def omeg(prof, p):
     '''
