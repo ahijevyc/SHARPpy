@@ -1,5 +1,5 @@
 %TITLE%
-  COT 010506/0200     
+ RUC 010506/0200F000    cot 
 
    LEVEL       HGHT       TEMP       DWPT       WDIR       WSPD
 -------------------------------------------------------------------
@@ -68,7 +68,3 @@ Mean W:          16.1 g/Kg
 ----- Lapse Rates -----
 700-500mb   19 C 	7.2 C/km
 850-500mb   30 C	7.0 C/km
-
------ Note -----
-Old Title:  RUC 010506/0200F000    cot 
-

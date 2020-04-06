@@ -1,5 +1,5 @@
 %TITLE%
-  MHK 990531/0200     
+ RUC 990531/0200F000    mhk 
 
    LEVEL       HGHT       TEMP       DWPT       WDIR       WSPD
 -------------------------------------------------------------------
@@ -67,7 +67,3 @@ Mean W:          11.6 g/Kg
 ----- Lapse Rates -----
 700-500mb   17 C 	6.9 C/km
 850-500mb   30 C	7.0 C/km
-
------ Note -----
-Old Title:  RUC 990531/0200F000    mhk 
-

@@ -1,5 +1,5 @@
 %TITLE%
-  GWO 000103/1900     
+ RUC 000103/1900F000    gwo 
 
    LEVEL       HGHT       TEMP       DWPT       WDIR       WSPD
 -------------------------------------------------------------------
@@ -68,7 +68,3 @@ Mean W:          12.7 g/Kg
 ----- Lapse Rates -----
 700-500mb   19 C 	7.5 C/km
 850-500mb   27 C	6.4 C/km
-
------ Note -----
-Old Title:  RUC 000103/1900F000    gwo 
-

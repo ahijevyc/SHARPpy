@@ -30,24 +30,19 @@ def mean_wind(prof, pbot=850, ptop=250, dp=-1, stu=0, stv=0):
     dp : negative integer (optional; default -1)
         The pressure increment for the interpolated sounding
     stu : number (optional; default 0)
-        U-component of storm-motion vector (kts)
+        U-component of storm-motion vector
     stv : number (optional; default 0)
-        V-component of storm-motion vector (kts)
+        V-component of storm-motion vector
 
     Returns
     -------
     mnu : number
-        U-component (kts)
+        U-component
     mnv : number
-        V-component (kts)
+        V-component
 
     '''
     if dp > 0: dp = -dp
-    if not utils.QC(pbot) or not utils.QC(ptop):
-        return ma.masked, ma.masked
-    if prof.wdir.count() == 0:
-        return ma.masked, ma.masked
-
     ps = np.arange(pbot, ptop+dp, dp)
     u, v = interp.components(prof, ps)
     # u -= stu; v -= stv
@@ -68,23 +63,20 @@ def mean_wind_npw(prof, pbot=850., ptop=250., dp=-1, stu=0, stv=0):
     ptop : number (optional; default 250 hPa)
         Pressure of the top level (hPa)
     dp : negative integer (optional; default -1)
-        The pressure increment for the interpolated sounding (mb)
+        The pressure increment for the interpolated sounding
     stu : number (optional; default 0)
-        U-component of storm-motion vector (kts)
+        U-component of storm-motion vector
     stv : number (optional; default 0)
-        V-component of storm-motion vector (kts)
+        V-component of storm-motion vector
 
     Returns
     -------
     mnu : number
-        U-component (kts)
+        U-component
     mnv : number
-        V-component (kts)
+        V-component
 
     '''
-    if prof.wdir.count() == 0 or not utils.QC(ptop) or not utils.QC(pbot):
-        return ma.masked, ma.masked
-
     if dp > 0: dp = -dp
     ps = np.arange(pbot, ptop+dp, dp)
     u, v = interp.components(prof, ps)
@@ -107,18 +99,18 @@ def sr_wind(prof, pbot=850, ptop=250, stu=0, stv=0, dp=-1):
     ptop : number (optional; default 250 hPa)
         Pressure of the top level (hPa)
     stu : number (optional; default 0)
-        U-component of storm-motion vector (kts)
+        U-component of storm-motion vector
     stv : number (optional; default 0)
-        V-component of storm-motion vector  (kts)
+        V-component of storm-motion vector
     dp : negative integer (optional; default -1)
-        The pressure increment for the interpolated sounding (mb)
+        The pressure increment for the interpolated sounding
 
     Returns
     -------
     mnu : number
-        U-component (kts)
+        U-component
     mnv : number
-        V-component (kts)
+        V-component
 
     '''
     return mean_wind(prof, pbot=pbot, ptop=ptop, dp=dp, stu=stu, stv=stv)
@@ -139,18 +131,18 @@ def sr_wind_npw(prof, pbot=850, ptop=250, stu=0, stv=0, dp=-1):
     ptop : number (optional; default 250 hPa)
         Pressure of the top level (hPa)
     stu : number (optional; default 0)
-        U-component of storm-motion vector (kts)
+        U-component of storm-motion vector
     stv : number (optional; default 0)
-        V-component of storm-motion vector (kts)
+        V-component of storm-motion vector
     dp : negative integer (optional; default -1)
-        The pressure increment for the interpolated sounding (mb)
+        The pressure increment for the interpolated sounding
 
     Returns
     -------
     mnu : number
-        U-component (kts)
+        U-component
     mnv : number
-        V-component (kts)
+        V-component
 
     '''
     return mean_wind_npw(prof, pbot=pbot, ptop=ptop, dp=dp, stu=stu, stv=stv)
@@ -172,14 +164,11 @@ def wind_shear(prof, pbot=850, ptop=250):
     Returns
     -------
     shu : number
-        U-component (kts)
+        U-component
     shv : number
-        V-component (kts)
+        V-component
 
     '''
-    if prof.wdir.count() == 0 or not utils.QC(ptop) or not utils.QC(pbot):
-        return ma.masked, ma.masked
-
     ubot, vbot = interp.components(prof, pbot)
     utop, vtop = interp.components(prof, ptop)
     shu = utop - ubot
@@ -190,26 +179,23 @@ def non_parcel_bunkers_motion_experimental(prof):
     '''
         Compute the Bunkers Storm Motion for a Right Moving Supercell
         
-        Parameters
-        ----------
+        Inputs
+        ------
         prof : profile object
-            Profile Object
+        Profile Object
         
         Returns
         -------
         rstu : number
-            Right Storm Motion U-component (kts)
+        Right Storm Motion U-component
         rstv : number
-            Right Storm Motion V-component (kts)
+        Right Storm Motion V-component
         lstu : number
-            Left Storm Motion U-component (kts)
+        Left Storm Motion U-component
         lstv : number
-            Left Storm Motion V-component (kts)
+        Left Storm Motion V-component
         
         '''
-    if prof.wdir.count() == 0:
-        return ma.masked, ma.masked, ma.masked, ma.masked
-
     d = utils.MS2KTS(7.5)     # Deviation value emperically derived as 7.5 m/s
     ## get the msl height of 500m, 5.5km, and 6.0km above the surface
     msl500m = interp.to_msl(prof, 500.)
@@ -249,26 +235,23 @@ def non_parcel_bunkers_motion(prof):
     '''
     Compute the Bunkers Storm Motion for a Right Moving Supercell
 
-    Parameters
-    ----------
+    Inputs
+    ------
     prof : profile object
         Profile Object
 
     Returns
     -------
     rstu : number
-        Right Storm Motion U-component (kts)
+        Right Storm Motion U-component
     rstv : number
-        Right Storm Motion V-component (kts)
+        Right Storm Motion V-component
     lstu : number
-        Left Storm Motion U-component (kts)
+        Left Storm Motion U-component
     lstv : number
-        Left Storm Motion V-component (kts)
+        Left Storm Motion V-component
 
     '''
-    if prof.wdir.count() == 0:
-        return ma.masked, ma.masked, ma.masked, ma.masked
-
     d = utils.MS2KTS(7.5)     # Deviation value emperically derived as 7.5 m/s
     msl6km = interp.to_msl(prof, 6000.)
     p6km = interp.pres(prof, msl6km)
@@ -302,11 +285,11 @@ def helicity(prof, lower, upper, stu=0, stv=0, dp=-1, exact=True):
     upper : number
         Top level of layer (m, AGL)
     stu : number (optional; default = 0)
-        U-component of storm-motion (kts)
+        U-component of storm-motion
     stv : number (optional; default = 0)
-        V-component of storm-motion (kts)
+        V-component of storm-motion
     dp : negative integer (optional; default -1)
-        The pressure increment for the interpolated sounding (mb)
+        The pressure increment for the interpolated sounding
     exact : bool (optional; default = True)
         Switch to choose between using the exact data (slower) or using
         interpolated sounding at 'dp' pressure levels (faster)
@@ -321,9 +304,6 @@ def helicity(prof, lower, upper, stu=0, stv=0, dp=-1, exact=True):
         Negative Helicity (m2/s2)
 
     '''
-    if prof.wdir.count() == 0 or not utils.QC(lower) or not utils.QC(upper) or not utils.QC(stu) or not utils.QC(stv):
-        return ma.masked, ma.masked, ma.masked
-
     if lower != upper:
         lower = interp.to_msl(prof, lower)
         upper = interp.to_msl(prof, upper)
@@ -375,22 +355,16 @@ def max_wind(prof, lower, upper, all=False):
     p : number, numpy array
         Pressure level (hPa) of max wind speed
     maxu : number, numpy array
-        Maximum Wind Speed U-component (kts)
+        Maximum Wind Speed U-component
     maxv : number, numpy array
-        Maximum Wind Speed V-component (kts)
+        Maximum Wind Speed V-component
 
     '''
-    if prof.wdir.count() == 0 or not utils.QC(lower) or not utils.QC(upper):
-        return ma.masked, ma.masked, ma.masked
-
     lower = interp.to_msl(prof, lower)
     upper = interp.to_msl(prof, upper)
     plower = interp.pres(prof, lower)
     pupper = interp.pres(prof, upper)
-    if np.ma.is_masked(plower) or np.ma.is_masked(pupper):
-        warnings.warn("winds.max_wind() was unable to interpolate between height and pressure correctly.  This may be due to a data integrity issue.")
-        return ma.masked, ma.masked, ma.masked
-    #print(lower, upper, plower, pupper, prof.pres)
+
     ind1 = np.where((plower > prof.pres) | (np.isclose(plower, prof.pres)))[0][0]
     ind2 = np.where((pupper < prof.pres) | (np.isclose(pupper, prof.pres)))[0][-1]
 
@@ -420,17 +394,15 @@ def corfidi_mcs_motion(prof):
     Returns
     -------
     upu : number
-        U-component of the upshear vector (kts)
+        U-component of the upshear vector
     upv : number
-        V-component of the upshear vector (kts)
+        V-component of the upshear vector
     dnu : number
-        U-component of the downshear vector (kts)
+        U-component of the downshear vector
     dnv : number
-        V-component of the downshear vector (kts)
+        V-component of the downshear vector
 
     '''
-    if prof.wdir.count() == 0:
-        return ma.masked, ma.masked, ma.masked, ma.masked
     # Compute the tropospheric (850hPa-300hPa) mean wind
     if prof.pres[ prof.sfc ] < 850:
          mnu1, mnv1 = mean_wind_npw(prof, pbot=prof.pres[prof.sfc], ptop=300.)
@@ -464,13 +436,13 @@ def mbe_vectors(prof):
     Returns
     -------
     upu : number
-        U-component of the upshear vector (kts)
+        U-component of the upshear vector
     upv : number
-        V-component of the upshear vector (kts)
+        V-component of the upshear vector
     dnu : number
-        U-component of the downshear vector (kts)
+        U-component of the downshear vector
     dnv : number
-        V-component of the downshear vector (kts)
+        V-component of the downshear vector
 
     '''
     return corfidi_mcs_motion(prof)
@@ -486,19 +458,15 @@ def critical_angle(prof, stu=0, stv=0):
     prof : profile object
         Profile Object
     stu : number (optional; default = 0)
-        U-component of storm-motion (kts)
+        U-component of storm-motion
     stv : number (optional; default = 0)
-        V-component of storm-motion (kts)
+        V-component of storm-motion
 
     Returns
     -------
     angle : number
         Critical Angle (degrees)
-
     '''
-    if prof.wdir.count() == 0:
-        return ma.masked
-
     if not utils.QC(stu) or not utils.QC(stv):
         return ma.masked
 

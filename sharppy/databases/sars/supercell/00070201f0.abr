@@ -1,5 +1,5 @@
 %TITLE%
-  ABR 000702/0100     
+ RUC 000702/0100F000    abr 
 
    LEVEL       HGHT       TEMP       DWPT       WDIR       WSPD
 -------------------------------------------------------------------
@@ -67,7 +67,3 @@ Mean W:          14.1 g/Kg
 ----- Lapse Rates -----
 700-500mb   22 C 	8.3 C/km
 850-500mb   37 C	8.4 C/km
-
------ Note -----
-Old Title:  RUC 000702/0100F000    abr 
-

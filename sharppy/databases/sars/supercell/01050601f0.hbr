@@ -1,5 +1,5 @@
 %TITLE%
-  HBR 010506/0100     
+ RUC 010506/0100F000    hbr 
 
    LEVEL       HGHT       TEMP       DWPT       WDIR       WSPD
 -------------------------------------------------------------------
@@ -67,7 +67,3 @@ Mean W:          10.7 g/Kg
 ----- Lapse Rates -----
 700-500mb   18 C 	6.8 C/km
 850-500mb   31 C	7.2 C/km
-
------ Note -----
-Old Title:  RUC 010506/0100F000    hbr 
-

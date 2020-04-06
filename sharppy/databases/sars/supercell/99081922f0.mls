@@ -1,5 +1,5 @@
 %TITLE%
-  MLS 990819/2200     
+ RUC 990819/2200F000    mls 
 
    LEVEL       HGHT       TEMP       DWPT       WDIR       WSPD
 -------------------------------------------------------------------
@@ -65,7 +65,3 @@ Mean W:          7.1 g/Kg
 ----- Lapse Rates -----
 700-500mb   23 C 	8.6 C/km
 850-500mb   38 C	8.8 C/km
-
------ Note -----
-Old Title:  RUC 990819/2200F000    mls 
-

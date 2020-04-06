@@ -1,5 +1,5 @@
 %TITLE%
-  CDS 010502/2300     
+ RUC 010502/2300F000    cds 
 
    LEVEL       HGHT       TEMP       DWPT       WDIR       WSPD
 -------------------------------------------------------------------
@@ -66,7 +66,3 @@ Mean W:          12.4 g/Kg
 ----- Lapse Rates -----
 700-500mb   24 C 	9.2 C/km
 850-500mb   40 C	9.1 C/km
-
------ Note -----
-Old Title:  RUC 010502/2300F000    cds 
-

@@ -1,5 +1,5 @@
 %TITLE%
-  TBN 990602/0000     
+ RUC 990602/0000F000    tbn 
 
    LEVEL       HGHT       TEMP       DWPT       WDIR       WSPD
 -------------------------------------------------------------------
@@ -67,7 +67,3 @@ Mean W:          14.8 g/Kg
 ----- Lapse Rates -----
 700-500mb   16 C 	6.5 C/km
 850-500mb   30 C	6.9 C/km
-
------ Note -----
-Old Title:  RUC 990602/0000F000    tbn 
-

@@ -1,5 +1,5 @@
 %TITLE%
-  HBR 010414/2100     
+ RUC 010414/2100F000    hbr 
 
    LEVEL       HGHT       TEMP       DWPT       WDIR       WSPD
 -------------------------------------------------------------------
@@ -67,7 +67,3 @@ Mean W:          13.8 g/Kg
 ----- Lapse Rates -----
 700-500mb   22 C 	8.2 C/km
 850-500mb   33 C	7.8 C/km
-
------ Note -----
-Old Title:  RUC 010414/2100F000    hbr 
-

@@ -4,19 +4,9 @@ import numpy as np
 import sharppy.sharptab.profile as profile
 import sharppy.sharptab.prof_collection as prof_collection
 from .decoder import Decoder
-<<<<<<< HEAD
 
 from io import StringIO
 from datetime import datetime
-=======
-from sutils.utils import is_py3
-
-try:
-    from StringIO import StringIO
-except ImportError:
-    from io import BytesIO
-from datetime import datetime, timedelta
->>>>>>> bc150d10e33555001255d0c9a8e33935c21790fc
 
 __fmtname__ = "spc"
 __classname__ = "SPCDecoder"
@@ -39,26 +29,15 @@ class SPCDecoder(Decoder):
         data_header = data[title_idx + 1].split()
         location = data_header[0]
         time = datetime.strptime(data_header[1][:11], '%y%m%d/%H%M')
-        if len(data_header) > 2:
-            lat, lon = data_header[2].split(',')
-            lat = float(lat)
-            lon = float(lon)
-        else:
-            lat = 35.
-            lon = -97.
-
-        if time > datetime.utcnow() + timedelta(hours=1): 
+        
+        if time > datetime.utcnow(): #If the strptime accidently makes the sounding the future:
             # If the strptime accidently makes the sounding in the future (like with SARS archive)
             # i.e. a 1957 sounding becomes 2057 sounding...ensure that it's a part of the 20th century
             time = datetime.strptime('19' + data_header[1][:11], '%Y%m%d/%H%M')
 
         ## put it all together for StringIO
         full_data = '\n'.join(data[start_idx : finish_idx][:])
-
-        if not is_py3():
-            sound_data = StringIO( full_data )
-        else:
-            sound_data = BytesIO( full_data.encode() )
+        sound_data = StringIO( full_data )
 
         ## read the data into arrays
         p, h, T, Td, wdir, wspd = np.genfromtxt( sound_data, delimiter=',', comments="%", unpack=True )
@@ -71,13 +50,9 @@ class SPCDecoder(Decoder):
         wspd = wspd #[idx]
         wdir = wdir #[idx]
 
-        # Br00tal hack
-        if hght[0] > 30000:
-            hght[0] = -9999.00
-
         # Force latitude to be 35 N. Figure out a way to fix this later.
         prof = profile.create_profile(profile='raw', pres=pres, hght=hght, tmpc=tmpc, dwpc=dwpc,
-            wdir=wdir, wspd=wspd, location=location, date=time, latitude=lat, missing=-9999.00)
+            wdir=wdir, wspd=wspd, location=location, date=time, latitude=35.)
 
         prof_coll = prof_collection.ProfCollection(
             {'':[ prof ]}, 
@@ -88,7 +63,3 @@ class SPCDecoder(Decoder):
         prof_coll.setMeta('observed', True)
         prof_coll.setMeta('base_time', time)
         return prof_coll
-
-#if __name__ == '__main__':
-#    import sys
-#    SPCDecoder(sys.argv[1])

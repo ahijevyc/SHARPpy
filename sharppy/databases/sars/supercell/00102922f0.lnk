@@ -1,5 +1,5 @@
 %TITLE%
-  LNK 001029/2200     
+ RUC 001029/2200F000    lnk 
 
    LEVEL       HGHT       TEMP       DWPT       WDIR       WSPD
 -------------------------------------------------------------------
@@ -67,7 +67,3 @@ Mean W:          10.1 g/Kg
 ----- Lapse Rates -----
 700-500mb   16 C 	6.2 C/km
 850-500mb   29 C	6.9 C/km
-
------ Note -----
-Old Title:  RUC 001029/2200F000    lnk 
-

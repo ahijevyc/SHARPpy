@@ -1,5 +1,5 @@
 %TITLE%
-  LBF 990821/0000     
+ RUC 990821/0000F000    lbf 
 
    LEVEL       HGHT       TEMP       DWPT       WDIR       WSPD
 -------------------------------------------------------------------
@@ -65,7 +65,3 @@ Mean W:          9.7 g/Kg
 ----- Lapse Rates -----
 700-500mb   19 C 	7.1 C/km
 850-500mb   29 C	6.7 C/km
-
------ Note -----
-Old Title:  RUC 990821/0000F000    lbf 
-

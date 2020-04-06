@@ -1,5 +1,5 @@
 %TITLE%
-  COQ 990728/0000     
+ RUC 990728/0000F000    coq 
 
    LEVEL       HGHT       TEMP       DWPT       WDIR       WSPD
 -------------------------------------------------------------------
@@ -67,7 +67,3 @@ Mean W:          11.8 g/Kg
 ----- Lapse Rates -----
 700-500mb   19 C 	7.3 C/km
 850-500mb   31 C	7.3 C/km
-
------ Note -----
-Old Title:  RUC 990728/0000F000    coq 
-

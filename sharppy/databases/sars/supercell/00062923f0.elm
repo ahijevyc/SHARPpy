@@ -1,5 +1,5 @@
 %TITLE%
-  ELM 000629/2300     
+ RUC 000629/2300F000    elm 
 
    LEVEL       HGHT       TEMP       DWPT       WDIR       WSPD
 -------------------------------------------------------------------
@@ -67,7 +67,3 @@ Mean W:          8.8 g/Kg
 ----- Lapse Rates -----
 700-500mb   16 C 	6.2 C/km
 850-500mb   28 C	6.7 C/km
-
------ Note -----
-Old Title:  RUC 000629/2300F000    elm 
-

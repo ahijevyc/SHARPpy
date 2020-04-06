@@ -1,5 +1,5 @@
 %TITLE%
-  PIR 000805/0200     
+ RUC 000805/0200F000    pir 
 
    LEVEL       HGHT       TEMP       DWPT       WDIR       WSPD
 -------------------------------------------------------------------
@@ -66,7 +66,3 @@ Mean W:          14.3 g/Kg
 ----- Lapse Rates -----
 700-500mb   19 C 	7.5 C/km
 850-500mb   35 C	8.1 C/km
-
------ Note -----
-Old Title:  RUC 000805/0200F000    pir 
-

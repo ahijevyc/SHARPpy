@@ -1,5 +1,5 @@
 %TITLE%
-  SPS 010504/2100     
+ RUC 010504/2100F000    sps 
 
    LEVEL       HGHT       TEMP       DWPT       WDIR       WSPD
 -------------------------------------------------------------------
@@ -67,7 +67,3 @@ Mean W:          13.2 g/Kg
 ----- Lapse Rates -----
 700-500mb   15 C 	5.9 C/km
 850-500mb   28 C	6.6 C/km
-
------ Note -----
-Old Title:  RUC 010504/2100F000    sps 
-

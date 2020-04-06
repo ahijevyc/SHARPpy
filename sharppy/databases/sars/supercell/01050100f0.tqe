@@ -1,5 +1,5 @@
 %TITLE%
-  TQE 010501/0000     
+ RUC 010501/0000F000    tqe 
 
    LEVEL       HGHT       TEMP       DWPT       WDIR       WSPD
 -------------------------------------------------------------------
@@ -67,7 +67,3 @@ Mean W:          9.5 g/Kg
 ----- Lapse Rates -----
 700-500mb   19 C 	7.6 C/km
 850-500mb   31 C	7.4 C/km
-
------ Note -----
-Old Title:  RUC 010501/0000F000    tqe 
-

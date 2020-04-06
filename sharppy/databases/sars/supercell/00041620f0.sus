@@ -1,5 +1,5 @@
 %TITLE%
-  SUS 000416/2000     
+ RUC 000416/2000F000    sus 
 
    LEVEL       HGHT       TEMP       DWPT       WDIR       WSPD
 -------------------------------------------------------------------
@@ -68,7 +68,3 @@ Mean W:          9.4 g/Kg
 ----- Lapse Rates -----
 700-500mb   17 C 	6.6 C/km
 850-500mb   28 C	6.6 C/km
-
------ Note -----
-Old Title:  RUC 000416/2000F000    sus 
-

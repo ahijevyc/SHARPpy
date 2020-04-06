@@ -1,5 +1,5 @@
 %TITLE%
-  RWF 000725/2300     
+ RUC 000725/2300F000    rwf 
 
    LEVEL       HGHT       TEMP       DWPT       WDIR       WSPD
 -------------------------------------------------------------------
@@ -67,7 +67,3 @@ Mean W:          14.5 g/Kg
 ----- Lapse Rates -----
 700-500mb   18 C 	7.0 C/km
 850-500mb   31 C	7.3 C/km
-
------ Note -----
-Old Title:  RUC 000725/2300F000    rwf 
-

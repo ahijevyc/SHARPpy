@@ -1,5 +1,5 @@
 %TITLE%
-  PPF 000420/0100     
+ RUC 000420/0100F000    ppf 
 
    LEVEL       HGHT       TEMP       DWPT       WDIR       WSPD
 -------------------------------------------------------------------
@@ -67,7 +67,3 @@ Mean W:          13.4 g/Kg
 ----- Lapse Rates -----
 700-500mb   20 C 	7.5 C/km
 850-500mb   34 C	7.9 C/km
-
------ Note -----
-Old Title:  RUC 000420/0100F000    ppf 
-

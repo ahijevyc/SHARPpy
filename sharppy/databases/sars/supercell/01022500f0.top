@@ -1,5 +1,5 @@
 %TITLE%
-  TOP 010225/0000     
+ RUC 010225/0000F000    top 
 
    LEVEL       HGHT       TEMP       DWPT       WDIR       WSPD
 -------------------------------------------------------------------
@@ -67,7 +67,3 @@ Mean W:          7.3 g/Kg
 ----- Lapse Rates -----
 700-500mb   17 C 	6.8 C/km
 850-500mb   29 C	7.0 C/km
-
------ Note -----
-Old Title:  RUC 010225/0000F000    top 
-

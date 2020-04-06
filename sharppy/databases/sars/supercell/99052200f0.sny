@@ -1,5 +1,5 @@
 %TITLE%
-  SNY 990522/0000     
+ RUC 990522/0000F000    sny 
 
    LEVEL       HGHT       TEMP       DWPT       WDIR       WSPD
 -------------------------------------------------------------------
@@ -63,7 +63,3 @@ Mean W:          8.7 g/Kg
 ----- Lapse Rates -----
 700-500mb   20 C 	7.7 C/km
 850-500mb   35 C	8.2 C/km
-
------ Note -----
-Old Title:  RUC 990522/0000F000    sny 
-

@@ -1,5 +1,5 @@
 %TITLE%
-  LEX 000817/2000     
+ RUC 000817/2000F000    lex 
 
    LEVEL       HGHT       TEMP       DWPT       WDIR       WSPD
 -------------------------------------------------------------------
@@ -68,7 +68,3 @@ Mean W:          16.4 g/Kg
 ----- Lapse Rates -----
 700-500mb   15 C 	5.9 C/km
 850-500mb   27 C	6.3 C/km
-
------ Note -----
-Old Title:  RUC 000817/2000F000    lex 
-

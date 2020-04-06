@@ -1,5 +1,5 @@
 %TITLE%
-  IEN 990605/0000     
+ RUC 990605/0000F000    ien 
 
    LEVEL       HGHT       TEMP       DWPT       WDIR       WSPD
 -------------------------------------------------------------------
@@ -64,7 +64,3 @@ Mean W:          12.0 g/Kg
 ----- Lapse Rates -----
 700-500mb   22 C 	8.2 C/km
 850-500mb   35 C	8.2 C/km
-
------ Note -----
-Old Title:  RUC 990605/0000F000    ien 
-

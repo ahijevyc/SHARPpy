@@ -1,5 +1,5 @@
 %TITLE%
-  ABQ 990524/2000     
+ RUC 990524/2000F000    abq 
 
    LEVEL       HGHT       TEMP       DWPT       WDIR       WSPD
 -------------------------------------------------------------------
@@ -61,7 +61,3 @@ Mean W:          8.1 g/Kg
 ----- Lapse Rates -----
 700-500mb   22 C 	8.5 C/km
 850-500mb   -999 C	-999.0 C/km
-
------ Note -----
-Old Title:  RUC 990524/2000F000    abq 
-

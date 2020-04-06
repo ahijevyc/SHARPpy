@@ -1,5 +1,5 @@
 %TITLE%
-  IRS 000509/2200     
+ RUC 000509/2200F000    irs 
 
    LEVEL       HGHT       TEMP       DWPT       WDIR       WSPD
 -------------------------------------------------------------------
@@ -67,7 +67,3 @@ Mean W:          11.9 g/Kg
 ----- Lapse Rates -----
 700-500mb   18 C 	6.9 C/km
 850-500mb   28 C	6.6 C/km
-
------ Note -----
-Old Title:  RUC 000509/2200F000    irs 
-

@@ -1,5 +1,5 @@
 %TITLE%
-  ROW 990525/2100     
+ RUC 990525/2100F000    row 
 
    LEVEL       HGHT       TEMP       DWPT       WDIR       WSPD
 -------------------------------------------------------------------
@@ -64,7 +64,3 @@ Mean W:          8.6 g/Kg
 ----- Lapse Rates -----
 700-500mb   19 C 	7.4 C/km
 850-500mb   36 C	8.4 C/km
-
------ Note -----
-Old Title:  RUC 990525/2100F000    row 
-

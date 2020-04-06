@@ -1,5 +1,5 @@
 %TITLE%
-  OAX 010423/0000     
+ RUC 010423/0000F000    oax 
 
    LEVEL       HGHT       TEMP       DWPT       WDIR       WSPD
 -------------------------------------------------------------------
@@ -67,7 +67,3 @@ Mean W:          11.4 g/Kg
 ----- Lapse Rates -----
 700-500mb   15 C 	5.9 C/km
 850-500mb   26 C	6.1 C/km
-
------ Note -----
-Old Title:  RUC 010423/0000F000    oax 
-

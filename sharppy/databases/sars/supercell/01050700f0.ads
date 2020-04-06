@@ -1,5 +1,5 @@
 %TITLE%
-  ADS 010507/0000     
+ RUC 010507/0000F000    ads 
 
    LEVEL       HGHT       TEMP       DWPT       WDIR       WSPD
 -------------------------------------------------------------------
@@ -68,7 +68,3 @@ Mean W:          14.4 g/Kg
 ----- Lapse Rates -----
 700-500mb   19 C 	7.2 C/km
 850-500mb   32 C	7.4 C/km
-
------ Note -----
-Old Title:  RUC 010507/0000F000    ads 
-

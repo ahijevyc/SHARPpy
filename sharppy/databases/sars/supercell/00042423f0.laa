@@ -1,5 +1,5 @@
 %TITLE%
-  LAA 000424/2300     
+ RUC 000424/2300F000    laa 
 
    LEVEL       HGHT       TEMP       DWPT       WDIR       WSPD
 -------------------------------------------------------------------
@@ -64,7 +64,3 @@ Mean W:          5.4 g/Kg
 ----- Lapse Rates -----
 700-500mb   23 C 	8.9 C/km
 850-500mb   37 C	8.7 C/km
-
------ Note -----
-Old Title:  RUC 000424/2300F000    laa 
-

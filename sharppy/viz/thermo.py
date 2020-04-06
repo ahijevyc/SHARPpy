@@ -1,7 +1,7 @@
 import numpy as np
-from qtpy import QtGui, QtCore, QtWidgets
-from qtpy.QtCore import *
-from qtpy.QtGui import *
+from PySide import QtGui, QtCore
+from PySide.QtCore import *
+from PySide.QtGui import *
 import sharppy.sharptab as tab
 from sharppy.sharptab.constants import *
 import datetime
@@ -12,12 +12,12 @@ import platform
 
 __all__ = ['backgroundText', 'plotText']
 
-class backgroundText(QtWidgets.QFrame):
+class backgroundText(QtGui.QFrame):
     '''
     Handles drawing the background frame onto a QPixmap.
-    Inherits a QtWidgets.QFrame Object.
+    Inherits a QtGui.QFrame Object.
     '''
-    def __init__(self, **kwargs):
+    def __init__(self):
         super(backgroundText, self).__init__()
         self.initUI()
 
@@ -55,7 +55,7 @@ class backgroundText(QtWidgets.QFrame):
         self.ylast = self.label_height
         ## initialize the QPixmap that will be drawn on.
         self.plotBitMap = QtGui.QPixmap(self.width()-2, self.height()-2)
-        self.plotBitMap.fill(self.bg_color)
+        self.plotBitMap.fill(QtCore.Qt.black)
         ## plot the background frame
         self.plotBackground()
     
@@ -64,7 +64,7 @@ class backgroundText(QtWidgets.QFrame):
         Draws the background frame and the text headers for indices.
         '''
         ## initialize a white pen with thickness 1 and a solid line
-        pen = QtGui.QPen(self.fg_color, 1, QtCore.Qt.SolidLine)
+        pen = QtGui.QPen(QtCore.Qt.white, 1, QtCore.Qt.SolidLine)
         qp.setPen(pen)
         qp.setFont(self.label_font)
         ## set the horizontal grid to be the width of the frame
@@ -124,30 +124,9 @@ class plotText(backgroundText):
         
         Parameters
         ----------
-        pcl_types :  
+        prof: a Profile Object
+        
         '''
-        self.bg_color = QtGui.QColor('#000000')
-        self.fg_color = QtGui.QColor('#ffffff')
-        self.pw_units = 'in'
-        self.temp_units = 'Fahrenheit'
-
-        self.alert_colors = [
-            QtGui.QColor('#775000'),
-            QtGui.QColor('#996600'),
-            QtGui.QColor('#ffffff'),
-            QtGui.QColor('#ffff00'),
-            QtGui.QColor('#ff0000'),
-            QtGui.QColor('#e700df'),
-        ]
-        self.left_scp_color = QtGui.QColor('#00ffff')
-
-        self.pcl_sel_color = QtGui.QColor('#00ffff')
-        self.pcl_cin_hi_color = QtGui.QColor('#993333')
-        self.pcl_cin_md_color = QtGui.QColor('#996600')
-        self.pcl_cin_lo_color = QtGui.QColor('#00ff00')
-
-        self.use_left = False
-
         ## get the parcels to be displayed in the GUI
         super(plotText, self).__init__()
 
@@ -187,7 +166,7 @@ class plotText(backgroundText):
         ## K Index
         self.k_idx = tab.utils.INT2STR( prof.k_idx )
         ## precipitable water
-        self.pwat = prof.pwat
+        self.pwat = tab.utils.FLOAT2STR( prof.pwat, 2 )
         ## 0-3km agl lapse rate
         self.lapserate_3km = tab.utils.FLOAT2STR( prof.lapserate_3km, 1 )
         ## 3-6km agl lapse rate
@@ -197,9 +176,9 @@ class plotText(backgroundText):
         ## 700-500mb lapse rate
         self.lapserate_700_500 = tab.utils.FLOAT2STR( prof.lapserate_700_500, 1 )
         ## convective temperature
-        self.convT = prof.convT
+        self.convT = tab.utils.INT2STR( prof.convT )
         ## sounding forecast surface temperature
-        self.maxT = prof.maxT
+        self.maxT = tab.utils.INT2STR( prof.maxT )
         #fzl = str(int(self.sfcparcel.hght0c))
         ## 100mb mean mixing ratio
         self.mean_mixr = tab.utils.FLOAT2STR( prof.mean_mixr, 1 )
@@ -209,59 +188,13 @@ class plotText(backgroundText):
         ## calculate the totals totals index
         self.totals_totals = tab.utils.INT2STR( prof.totals_totals )
         self.dcape = tab.utils.INT2STR( prof.dcape )
-        self.drush = prof.drush
+        self.drush = tab.utils.INT2STR( prof.drush )
         self.sigsevere = tab.utils.INT2STR( prof.sig_severe )
         self.mmp = tab.utils.FLOAT2STR( prof.mmp, 2 )
         self.esp = tab.utils.FLOAT2STR( prof.esp, 1 )
         self.wndg = tab.utils.FLOAT2STR( prof.wndg, 1 )
         self.tei = tab.utils.INT2STR( prof.tei )
 
-        self.clearData()
-        self.plotBackground()
-        self.plotData()
-        self.update()
-
-    def setPreferences(self, update_gui=True, **prefs):
-        self.pw_units = prefs['pw_units']
-        self.temp_units = prefs['temp_units']
- 
-        self.bg_color = QtGui.QColor(prefs['bg_color'])
-        self.fg_color = QtGui.QColor(prefs['fg_color'])
-
-        self.pwat_colors = [
-            QtGui.QColor(prefs['pwat_m3_color']),
-            QtGui.QColor(prefs['pwat_m2_color']),
-            QtGui.QColor(prefs['pwat_m1_color']),
-            self.fg_color,
-            QtGui.QColor(prefs['pwat_p1_color']),
-            QtGui.QColor(prefs['pwat_p2_color']),
-            QtGui.QColor(prefs['pwat_p3_color']),
-        ]
-
-        self.alert_colors = [
-            QtGui.QColor(prefs['alert_l1_color']),
-            QtGui.QColor(prefs['alert_l2_color']),
-            QtGui.QColor(prefs['alert_l3_color']),
-            QtGui.QColor(prefs['alert_l4_color']),
-            QtGui.QColor(prefs['alert_l5_color']),
-            QtGui.QColor(prefs['alert_l6_color']),
-        ]
-        self.left_scp_color = QtGui.QColor(prefs['alert_lscp_color'])
-
-        self.pcl_sel_color = QtGui.QColor(prefs['pcl_sel_color'])
-        self.pcl_cin_hi_color = QtGui.QColor(prefs['pcl_cin_hi_color'])
-        self.pcl_cin_md_color = QtGui.QColor(prefs['pcl_cin_md_color'])
-        self.pcl_cin_lo_color = QtGui.QColor(prefs['pcl_cin_lo_color'])
-
-        if update_gui:
-            self.clearData()
-            self.plotBackground()
-            self.plotData()
-            self.update()
-
-    def setDeviant(self, deviant):
-        self.use_left = deviant == 'left'
-        
         self.clearData()
         self.plotBackground()
         self.plotData()
@@ -319,7 +252,7 @@ class plotText(backgroundText):
         in the frame.
         '''
         self.plotBitMap = QtGui.QPixmap(self.width(), self.height())
-        self.plotBitMap.fill(self.bg_color)
+        self.plotBitMap.fill(QtCore.Qt.black)
     
     def drawSevere(self, qp):
         '''
@@ -332,101 +265,78 @@ class plotText(backgroundText):
         '''
         ## initialize a pen to draw with.
         pen = QtGui.QPen(QtCore.Qt.yellow, 1, QtCore.Qt.SolidLine)
-        self.label_font.setBold(True)
         qp.setFont(self.label_font)
-       
-        color_list = self.alert_colors
+        color_list = [QtGui.QColor(CYAN), QtGui.QColor(DBROWN), QtGui.QColor(LBROWN), QtGui.QColor(WHITE), QtGui.QColor(YELLOW), QtGui.QColor(RED), QtGui.QColor(MAGENTA)]
         ## needs to be coded.
         x1 = self.brx / 10
         y1 = self.ylast + self.tpad
+        ship = tab.utils.FLOAT2STR( self.prof.ship, 1 )
+        stp_fixed = tab.utils.FLOAT2STR( self.prof.stp_fixed, 1 )
+        stp_cin = tab.utils.FLOAT2STR( self.prof.stp_cin, 1 )
+        right_scp = tab.utils.FLOAT2STR( self.prof.right_scp, 1 )
 
-        ship = self.prof.ship
-        ship_str = tab.utils.FLOAT2STR( ship, 1 )
-
-        if self.use_left:
-            stp_fixed = self.prof.left_stp_fixed
-            stp_cin = self.prof.left_stp_cin
-            scp = self.prof.left_scp
-        else:
-            stp_fixed = self.prof.right_stp_fixed
-            stp_cin = self.prof.right_stp_cin
-            scp = self.prof.right_scp
-
-        stp_fixed_str = tab.utils.FLOAT2STR( stp_fixed, 1 )
-        stp_cin_str = tab.utils.FLOAT2STR( stp_cin, 1 )
-        scp_str = tab.utils.FLOAT2STR( scp, 1 )
-
-        if self.prof.latitude < 0:
-            stp_fixed = -stp_fixed
-            stp_cin = -stp_cin
-            scp = -scp
-
-        # Coloring thresholds provided by Rich Thompson (SPC)
+        # Coloring provided by Rich Thompson (SPC)
         labels = ['Supercell = ', 'STP (cin) = ', 'STP (fix) = ', 'SHIP = ']
-        indices = [scp, stp_cin, stp_fixed, ship]
-        index_strs = [scp_str, stp_cin_str, stp_fixed_str, ship_str]
-        for label, index_str, index in zip(labels,index_strs,indices):
+        indices = [right_scp, stp_cin, stp_fixed, ship]
+        for label, index in zip(labels,indices):
             rect = QtCore.QRect(x1*7, y1, x1*8, self.label_height)
-            if index == '--':
-                pen = QtGui.QPen(color_list[0], 1, QtCore.Qt.SolidLine)
-            elif label == labels[0]: # STP uses a different color scale
-                if index >= 19.95:
+            if label == labels[0]: # STP uses a different color scale
+                if float(index) >= 19.95:
+                    pen = QtGui.QPen(color_list[6], 1, QtCore.Qt.SolidLine)
+                elif float(index) >= 11.95:
                     pen = QtGui.QPen(color_list[5], 1, QtCore.Qt.SolidLine)
-                elif index >= 11.95:
-                    pen = QtGui.QPen(color_list[4], 1, QtCore.Qt.SolidLine)
-                elif index >= 1.95:
+                elif float(index) >= 1.95:
+                    pen = QtGui.QPen(color_list[3], 1, QtCore.Qt.SolidLine)
+                elif float(index) >= .45:
                     pen = QtGui.QPen(color_list[2], 1, QtCore.Qt.SolidLine)
-                elif index >= .45:
+                elif float(index) >= -.45:
                     pen = QtGui.QPen(color_list[1], 1, QtCore.Qt.SolidLine)
-                elif index >= -.45:
+                elif float(index) < -.45:
                     pen = QtGui.QPen(color_list[0], 1, QtCore.Qt.SolidLine)
-                elif index < -.45:
-                    pen = QtGui.QPen(self.left_scp_color, 1, QtCore.Qt.SolidLine)
             elif label == labels[1]: # STP effective
-                if index >= 8:
+                if float(index) >= 8:
+                    pen = QtGui.QPen(color_list[6], 1, QtCore.Qt.SolidLine)
+                elif float(index) >= 4:
                     pen = QtGui.QPen(color_list[5], 1, QtCore.Qt.SolidLine)
-                elif index >= 4:
+                elif float(index) >= 2:
                     pen = QtGui.QPen(color_list[4], 1, QtCore.Qt.SolidLine)
-                elif index >= 2:
+                elif float(index) >= 1:
                     pen = QtGui.QPen(color_list[3], 1, QtCore.Qt.SolidLine)
-                elif index >= 1:
+                elif float(index) >= .5:
                     pen = QtGui.QPen(color_list[2], 1, QtCore.Qt.SolidLine)
-                elif index >= .5:
+                elif float(index) < .5:
                     pen = QtGui.QPen(color_list[1], 1, QtCore.Qt.SolidLine)
-                elif index < .5:
-                    pen = QtGui.QPen(color_list[0], 1, QtCore.Qt.SolidLine)
             elif label == labels[2]: # STP fixed
-                if index >= 7:
+                if float(index) >= 7:
+                    pen = QtGui.QPen(color_list[6], 1, QtCore.Qt.SolidLine)
+                elif float(index) >= 5:
                     pen = QtGui.QPen(color_list[5], 1, QtCore.Qt.SolidLine)
-                elif index >= 5:
+                elif float(index) >= 2:
                     pen = QtGui.QPen(color_list[4], 1, QtCore.Qt.SolidLine)
-                elif index >= 2:
+                elif float(index) >= 1:
                     pen = QtGui.QPen(color_list[3], 1, QtCore.Qt.SolidLine)
-                elif index >= 1:
+                elif float(index) >= .5:
                     pen = QtGui.QPen(color_list[2], 1, QtCore.Qt.SolidLine)
-                elif index >= .5:
+                else:
                     pen = QtGui.QPen(color_list[1], 1, QtCore.Qt.SolidLine)
-                else:
-                    pen = QtGui.QPen(color_list[0], 1, QtCore.Qt.SolidLine)
             elif label == labels[3]: # SHIP
-                if index >= 5:
+                if float(index) >= 5:
+                    pen = QtGui.QPen(color_list[6], 1, QtCore.Qt.SolidLine)
+                elif float(index) >= 2:
                     pen = QtGui.QPen(color_list[5], 1, QtCore.Qt.SolidLine)
-                elif index >= 2:
+                elif float(index) >= 1:
                     pen = QtGui.QPen(color_list[4], 1, QtCore.Qt.SolidLine)
-                elif index >= 1:
+                elif float(index) >= .5:
                     pen = QtGui.QPen(color_list[3], 1, QtCore.Qt.SolidLine)
-                elif index >= .5:
-                    pen = QtGui.QPen(color_list[2], 1, QtCore.Qt.SolidLine)
                 else:
-                    pen = QtGui.QPen(color_list[0], 1, QtCore.Qt.SolidLine)
+                    pen = QtGui.QPen(color_list[1], 1, QtCore.Qt.SolidLine)
             qp.setPen(pen)
-            qp.drawText(rect, QtCore.Qt.TextDontClip | QtCore.Qt.AlignLeft, label + index_str)
+            qp.drawText(rect, QtCore.Qt.TextDontClip | QtCore.Qt.AlignLeft, label + index)
             vspace = self.label_height
             if platform.system() == "Windows":
                 vspace += self.label_metrics.descent()
             y1 += vspace
-        self.label_font.setBold(False)
-
+    
     def drawIndices(self, qp):
         '''
         Draws the non-parcel indices.
@@ -445,34 +355,28 @@ class plotText(backgroundText):
         ## Now we have all the data we could ever want. Time to start drawing
         ## them on the frame.
         ## This starts with the left column.
-        std_dev = [ u'(<3\u03C3)', u'(2-3\u03C3)', u'(1-2\u03C3)', '', u'(1-2\u03C3)', u'(2-3\u03C3)', u'(>3\u03C3)' ]
-        color = self.pwat_colors[self.prof.pwv_flag + 3] 
-        dist_string = std_dev[self.prof.pwv_flag + 3]
-        if self.pw_units == 'cm':
-            pw_display = tab.utils.IN2CM(self.pwat)
-            pw_display = tab.utils.FLOAT2STR( pw_display, 1 )
+        
+        if self.prof.pwv_flag == -3:
+            color = QtGui.QColor('#FF7F00')
+        elif self.prof.pwv_flag == -2:
+            color = QtGui.QColor('#EE9A00')
+        elif self.prof.pwv_flag == -1:
+            color = QtGui.QColor('#FFDAB9')
+        elif self.prof.pwv_flag == 0:
+            color = QtGui.QColor('#FFFFFF')
+        elif self.prof.pwv_flag == 1:
+            color = QtGui.QColor('#98FB98')
+        elif self.prof.pwv_flag == 2:
+            color = QtGui.QColor('#66CD00')
         else:
-            pw_display = self.pwat
-            pw_display = tab.utils.FLOAT2STR( pw_display, 2 )
+            color = QtGui.QColor('#00FF00')
 
         ## draw the first column of text using a loop, keeping the horizontal
         ## placement constant.
         y1 = self.ylast + self.tpad
-
-        if self.temp_units == 'Fahrenheit':
-            t_units_disp = 'F'
-            drush_disp = tab.utils.INT2STR( self.drush )
-            convT_disp = tab.utils.INT2STR( self.convT )
-            maxT_disp = tab.utils.INT2STR( self.maxT )
-        elif self.temp_units == 'Celsius':
-            t_units_disp = 'C'
-            drush_disp = tab.utils.INT2STR( tab.thermo.ftoc(self.drush) )
-            convT_disp = tab.utils.INT2STR( tab.thermo.ftoc(self.convT) )
-            maxT_disp = tab.utils.INT2STR( tab.thermo.ftoc(self.maxT) )
-
-        colors = [color, self.fg_color, self.fg_color, self.fg_color, self.fg_color, self.fg_color]
+        colors = [color, QtGui.QColor(WHITE), QtGui.QColor(WHITE), QtGui.QColor(WHITE), QtGui.QColor(WHITE), QtGui.QColor(WHITE)]
         texts = ['PW = ', 'MeanW = ', 'LowRH = ', 'MidRH = ', 'DCAPE = ', 'DownT = ']
-        indices = [pw_display + self.pw_units + ' ' + dist_string, self.mean_mixr + 'g/kg', self.low_rh + '%', self.mid_rh + '%', self.dcape, drush_disp + t_units_disp]
+        indices = [self.pwat + 'in', self.mean_mixr + 'g/kg', self.low_rh + '%', self.mid_rh + '%', self.dcape, self.drush + 'F']
         for text, index, c in zip(texts, indices, colors):
             rect = QtCore.QRect(rpad, y1, x1*4, self.label_height)
             pen = QtGui.QPen(c, 1, QtCore.Qt.SolidLine)
@@ -486,7 +390,7 @@ class plotText(backgroundText):
         ## middle-left column
         y1 = self.ylast + self.tpad
         texts = ['K = ', 'TT = ', 'ConvT = ', 'maxT = ', 'ESP = ', 'MMP = ']
-        indices = [self.k_idx, self.totals_totals, convT_disp + t_units_disp, maxT_disp + t_units_disp, self.esp, self.mmp]
+        indices = [self.k_idx, self.totals_totals, self.convT + 'F', self.maxT + 'F', self.esp, self.mmp]
         for text, index in zip(texts, indices):
             rect = QtCore.QRect(x1*3.5, y1, x1*4, self.label_height)
             qp.drawText(rect, QtCore.Qt.TextDontClip | QtCore.Qt.AlignLeft, text + index)
@@ -533,7 +437,7 @@ class plotText(backgroundText):
         
         '''
         ## initialize a white pen with thickness 2 and a solid line
-        pen = QtGui.QPen(self.fg_color, 1, QtCore.Qt.SolidLine)
+        pen = QtGui.QPen(QtCore.Qt.white, 1, QtCore.Qt.SolidLine)
         qp.setPen(pen)
         qp.setFont(self.label_font)
         ## make the initial x pixel coordinate relative to the frame
@@ -565,11 +469,11 @@ class plotText(backgroundText):
         for i, text in enumerate(texts):
             self.bounds[i,0] = y1
             if text == self.pcl_types[self.skewt_pcl]:
-                pen = QtGui.QPen(self.pcl_sel_color, 1, QtCore.Qt.SolidLine)
+                pen = QtGui.QPen(QtCore.Qt.cyan, 1, QtCore.Qt.SolidLine)
                 qp.setPen(pen)
                 pcl_index = i
             else:
-                pen = QtGui.QPen(self.fg_color, 1, QtCore.Qt.SolidLine)
+                pen = QtGui.QPen(QtCore.Qt.white, 1, QtCore.Qt.SolidLine)
                 qp.setPen(pen)
             rect = QtCore.QRect(0, y1, x1*2, self.label_height)
             qp.drawText(rect, QtCore.Qt.TextDontClip | QtCore.Qt.AlignCenter, text)
@@ -583,19 +487,19 @@ class plotText(backgroundText):
         for i, text in enumerate(capes):
             try:
                 if pcl_index == i and int(text) >= 4000:
-                    color = self.alert_colors[5]
+                    color = QtCore.Qt.magenta
                 elif pcl_index == i and int(text) >= 3000:
-                    color = self.alert_colors[4]
+                    color=QtCore.Qt.red
                 elif pcl_index == i and int(text) >= 2000:
-                    color = self.alert_colors[3]
+                    color=QtCore.Qt.yellow
                 else:
-                    color=self.fg_color
+                    color=QtCore.Qt.white
             except:
-                color=self.fg_color
+                color=QtCore.Qt.white
             pen = QtGui.QPen(color, 1, QtCore.Qt.SolidLine)
             qp.setPen(pen)
             rect = QtCore.QRect(x1*1, y1, x1*2, self.label_height)
-            qp.drawText(rect, QtCore.Qt.TextDontClip | QtCore.Qt.AlignCenter, bytes(text).decode('utf-8'))
+            qp.drawText(rect, QtCore.Qt.TextDontClip | QtCore.Qt.AlignCenter, text)
             vspace = self.label_height
             if platform.system() == "Windows":
                 vspace += self.label_metrics.descent()
@@ -605,19 +509,19 @@ class plotText(backgroundText):
         for i, text in enumerate(cins):
             try:
                 if int(capes[i]) > 0 and pcl_index == i and int(text) >= -50:
-                    color = self.pcl_cin_lo_color 
+                    color = QtCore.Qt.green
                 elif int(capes[i]) > 0 and pcl_index == i and int(text) >= -100:
-                    color = self.pcl_cin_md_color
+                    color=QtGui.QColor('#996600')
                 elif int(capes[i]) > 0 and pcl_index == i and int(text) < -100:
-                    color = self.pcl_cin_hi_color
+                    color=QtGui.QColor('#993333')
                 else:
-                    color = self.fg_color
+                    color=QtCore.Qt.white
             except:
-                color = self.fg_color
+                color=QtCore.Qt.white
             pen = QtGui.QPen(color, 1, QtCore.Qt.SolidLine)
             qp.setPen(pen)
             rect = QtCore.QRect(x1*2, y1, x1*2, self.label_height)
-            qp.drawText(rect, QtCore.Qt.TextDontClip | QtCore.Qt.AlignCenter, bytes(text).decode('utf-8'))
+            qp.drawText(rect, QtCore.Qt.TextDontClip | QtCore.Qt.AlignCenter, text)
             vspace = self.label_height
             if platform.system() == "Windows":
                 vspace += self.label_metrics.descent()
@@ -628,31 +532,31 @@ class plotText(backgroundText):
         for i, text in enumerate(lcls):
             try:
                 if int(text) < 1000 and pcl_index == i and texts[i] == "ML":
-                    color = self.pcl_cin_lo_color
+                    color = QtCore.Qt.green
                 elif int(text) < 1500 and pcl_index == i and texts[i] == "ML":
-                    color = self.pcl_cin_md_color
+                    color=QtGui.QColor('#996600')
                 elif int(text) < 2000 and pcl_index == i and texts[i] == "ML":
-                    color = self.pcl_cin_hi_color
+                    color=QtGui.QColor('#993333')
                 else:
-                    color = self.fg_color
+                    color=QtCore.Qt.white
             except:
-                color=self.fg_color
+                color=QtCore.Qt.white
             pen = QtGui.QPen(color, 1, QtCore.Qt.SolidLine)
             qp.setPen(pen)
             rect = QtCore.QRect(x1*3, y1, x1*2, self.label_height)
-            qp.drawText(rect, QtCore.Qt.TextDontClip | QtCore.Qt.AlignCenter, bytes(text).decode('utf-8'))
+            qp.drawText(rect, QtCore.Qt.TextDontClip | QtCore.Qt.AlignCenter, text)
             vspace = self.label_height
             if platform.system() == "Windows":
                 vspace += self.label_metrics.descent()
             y1 += vspace
 
-        pen = QtGui.QPen(self.fg_color, 1, QtCore.Qt.SolidLine)
+        pen = QtGui.QPen(QtCore.Qt.white, 1, QtCore.Qt.SolidLine)
         qp.setPen(pen)
         ## LI
         y1 = self.ylast + self.tpad
         for text in lis:
             rect = QtCore.QRect(x1*4, y1, x1*2, self.label_height)
-            qp.drawText(rect, QtCore.Qt.TextDontClip | QtCore.Qt.AlignCenter, bytes(text).decode('utf-8'))
+            qp.drawText(rect, QtCore.Qt.TextDontClip | QtCore.Qt.AlignCenter, text)
             vspace = self.label_height
             if platform.system() == "Windows":
                 vspace += self.label_metrics.descent()
@@ -661,7 +565,7 @@ class plotText(backgroundText):
         y1 = self.ylast + self.tpad
         for text in lfcs:
             rect = QtCore.QRect(x1*5, y1, x1*2, self.label_height)
-            qp.drawText(rect, QtCore.Qt.TextDontClip | QtCore.Qt.AlignCenter, bytes(text).decode('utf-8'))
+            qp.drawText(rect, QtCore.Qt.TextDontClip | QtCore.Qt.AlignCenter, text)
             vspace = self.label_height
             if platform.system() == "Windows":
                 vspace += self.label_metrics.descent()
@@ -670,7 +574,7 @@ class plotText(backgroundText):
         y1 = self.ylast + self.tpad
         for text in els:
             rect = QtCore.QRect(x1*6, y1, x1*2, self.label_height)
-            qp.drawText(rect, QtCore.Qt.TextDontClip | QtCore.Qt.AlignCenter, bytes(text).decode('utf-8'))
+            qp.drawText(rect, QtCore.Qt.TextDontClip | QtCore.Qt.AlignCenter, text)
             vspace = self.label_height
             if platform.system() == "Windows":
                 vspace += self.label_metrics.descent()
@@ -701,9 +605,9 @@ class plotText(backgroundText):
                 self.parentWidget().setFocus()
                 break
 
-class SelectParcels(QtWidgets.QWidget):
+class SelectParcels(QWidget):
     def __init__(self, parcel_types, parent):
-        QtWidgets.QWidget.__init__(self)
+        QWidget.__init__(self)
         self.thermo = parent
         self.parcel_types = parcel_types
         self.max_pcls = 4
@@ -712,42 +616,42 @@ class SelectParcels(QtWidgets.QWidget):
 
     def initUI(self):
 
-        self.sb = QtWidgets.QCheckBox('Surface-Based Parcel', self)
+        self.sb = QtGui.QCheckBox('Surface-Based Parcel', self)
         self.sb.move(20, 20)
         if "SFC" in self.parcel_types:
             self.sb.toggle()
             self.pcl_count += 1
         self.sb.stateChanged.connect(self.changeParcel)
 
-        self.ml = QtWidgets.QCheckBox('100 mb Mixed Layer Parcel', self)
+        self.ml = QtGui.QCheckBox('100 mb Mixed Layer Parcel', self)
         self.ml.move(20, 40)
         if "ML" in self.parcel_types:
             self.ml.toggle()
             self.pcl_count += 1
         self.ml.stateChanged.connect(self.changeParcel)
 
-        self.fcst = QtWidgets.QCheckBox('Forecast Surface Parcel', self)
+        self.fcst = QtGui.QCheckBox('Forecast Surface Parcel', self)
         self.fcst.move(20, 60)
         if "FCST" in self.parcel_types:
             self.fcst.toggle()
             self.pcl_count += 1
         self.fcst.stateChanged.connect(self.changeParcel)
 
-        self.mu = QtWidgets.QCheckBox('Most Unstable Parcel', self)
+        self.mu = QtGui.QCheckBox('Most Unstable Parcel', self)
         self.mu.move(20, 80)
         if "MU" in self.parcel_types:
             self.mu.toggle()
             self.pcl_count += 1
         self.mu.stateChanged.connect(self.changeParcel)
 
-        self.eff = QtWidgets.QCheckBox('Effective Inflow Layer Parcel', self)
+        self.eff = QtGui.QCheckBox('Effective Inflow Layer Parcel', self)
         self.eff.move(20, 100)
         if "EFF" in self.parcel_types:
             self.eff.toggle()
             self.pcl_count += 1
         self.eff.stateChanged.connect(self.changeParcel)
 
-        self.usr = QtWidgets.QCheckBox('User Defined Parcel', self)
+        self.usr = QtGui.QCheckBox('User Defined Parcel', self)
         self.usr.move(20, 120)
         if "USER" in self.parcel_types:
             self.usr.toggle()
@@ -757,7 +661,7 @@ class SelectParcels(QtWidgets.QWidget):
 
         self.setGeometry(300, 300, 250, 180)
         self.setWindowTitle('Show Parcels')
-        self.ok = QtWidgets.QPushButton('Ok', self)
+        self.ok = QtGui.QPushButton('Ok', self)
         self.ok.move(20,150)
         self.ok.clicked.connect(self.okPushed)
 
@@ -805,11 +709,3 @@ class SelectParcels(QtWidgets.QWidget):
             self.thermo.update()
             self.thermo.parentWidget().setFocus()
             self.hide()
-
-if __name__ == '__main__':
-    app_frame = QtGui.QApplication([])        
-    #tester = plotText(['sfcpcl', 'mlpcl', 'mupcl'])
-    tester = plotBackgroundText()
-    #tester.setProf()
-    tester.show()        
-    app_frame.exec_()

@@ -1,5 +1,5 @@
 %TITLE%
-  2WX 000705/0100     
+ RUC 000705/0100F000    2wx 
 
    LEVEL       HGHT       TEMP       DWPT       WDIR       WSPD
 -------------------------------------------------------------------
@@ -65,7 +65,3 @@ Mean W:          11.2 g/Kg
 ----- Lapse Rates -----
 700-500mb   23 C 	8.5 C/km
 850-500mb   34 C	7.8 C/km
-
------ Note -----
-Old Title:  RUC 000705/0100F000    2wx 
-

@@ -1,5 +1,5 @@
 %TITLE%
-  OFK 000604/0200     
+ RUC 000604/0200F000    ofk 
 
    LEVEL       HGHT       TEMP       DWPT       WDIR       WSPD
 -------------------------------------------------------------------
@@ -67,7 +67,3 @@ Mean W:          9.9 g/Kg
 ----- Lapse Rates -----
 700-500mb   20 C 	7.7 C/km
 850-500mb   30 C	7.0 C/km
-
------ Note -----
-Old Title:  RUC 000604/0200F000    ofk 
-

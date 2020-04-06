@@ -1,5 +1,5 @@
 %TITLE%
-  GZH 001109/0700     
+ RUC 001109/0700F000    gzh 
 
    LEVEL       HGHT       TEMP       DWPT       WDIR       WSPD
 -------------------------------------------------------------------
@@ -68,7 +68,3 @@ Mean W:          15.2 g/Kg
 ----- Lapse Rates -----
 700-500mb   15 C 	6.0 C/km
 850-500mb   26 C	6.0 C/km
-
------ Note -----
-Old Title:  RUC 001109/0700F000    gzh 
-

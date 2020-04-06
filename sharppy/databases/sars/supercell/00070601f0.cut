@@ -1,5 +1,5 @@
 %TITLE%
-  CUT 000706/0100     
+ RUC 000706/0100F000    cut 
 
    LEVEL       HGHT       TEMP       DWPT       WDIR       WSPD
 -------------------------------------------------------------------
@@ -62,7 +62,3 @@ Mean W:          11.6 g/Kg
 ----- Lapse Rates -----
 700-500mb   22 C 	8.5 C/km
 850-500mb   -999 C	-999.0 C/km
-
------ Note -----
-Old Title:  RUC 000706/0100F000    cut 
-

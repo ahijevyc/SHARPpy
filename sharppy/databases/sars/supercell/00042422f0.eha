@@ -1,5 +1,5 @@
 %TITLE%
-  EHA 000424/2200     
+ RUC 000424/2200F000    eha 
 
    LEVEL       HGHT       TEMP       DWPT       WDIR       WSPD
 -------------------------------------------------------------------
@@ -64,7 +64,3 @@ Mean W:          6.7 g/Kg
 ----- Lapse Rates -----
 700-500mb   21 C 	8.1 C/km
 850-500mb   36 C	8.4 C/km
-
------ Note -----
-Old Title:  RUC 000424/2200F000    eha 
-

@@ -1,8 +1,7 @@
 import numpy as np
-from qtpy import QtGui, QtCore, QtWidgets
-from qtpy.QtOpenGL import *
+from PySide import QtGui, QtCore
+from PySide.QtOpenGL import *
 import sharppy.sharptab as tab
-import sharppy.sharptab.utils as utils
 from sharppy.sharptab.constants import *
 
 ## routine written by Kelton Halbert - OU School of Meteorology
@@ -11,12 +10,12 @@ from sharppy.sharptab.constants import *
 __all__ = ['backgroundThetae', 'plotThetae']
 
 
-class backgroundThetae(QtWidgets.QFrame):
+class backgroundThetae(QtGui.QFrame):
     '''
     Draw the background frame and lines for the Theta-E plot.
     Draws the background on a QPixmap.
     
-    Inherits a QtWidgets.QFrame Object
+    Inherits a QtGui.QFrame Object
     '''
     def __init__(self):
         super(backgroundThetae, self).__init__()
@@ -47,8 +46,7 @@ class backgroundThetae(QtWidgets.QFrame):
             fsize = 6
         else:
             fsize = 7
-        self.font_ratio = 0.0512
-        self.label_font = QtGui.QFont('Helvetica', round(self.size().height() * self.font_ratio))
+        self.label_font = QtGui.QFont('Helvetica', fsize)
         ## initialize the QPixmap
         self.plotBitMap = QtGui.QPixmap(self.width(), self.height())
         self.clear()
@@ -88,7 +86,7 @@ class backgroundThetae(QtWidgets.QFrame):
         '''
         Clear the widget
         '''
-        self.plotBitMap.fill(self.bg_color)
+        self.plotBitMap.fill(QtCore.Qt.black)
 
     def draw_frame(self, qp):
         '''
@@ -99,7 +97,7 @@ class backgroundThetae(QtWidgets.QFrame):
         qp: QtGui.QPainter object
         '''
         ## set a new pen to draw with
-        pen = QtGui.QPen(self.fg_color, 2, QtCore.Qt.SolidLine)
+        pen = QtGui.QPen(QtCore.Qt.white, 2, QtCore.Qt.SolidLine)
         qp.setPen(pen)
         ## draw the borders in white
         qp.drawLine(self.tlx, self.tly, self.brx, self.tly)
@@ -123,7 +121,7 @@ class backgroundThetae(QtWidgets.QFrame):
         
         '''
         ## set a new pen with a white color and solid line of thickness 1
-        pen = QtGui.QPen(self.fg_color, 1, QtCore.Qt.SolidLine)
+        pen = QtGui.QPen(QtGui.QColor(WHITE), 1, QtCore.Qt.SolidLine)
         qp.setPen(pen)
         qp.setFont(self.label_font)
         ## convert the pressure to pixel coordinates
@@ -136,7 +134,7 @@ class backgroundThetae(QtWidgets.QFrame):
                 self.brx+self.rpad, y1)
         qp.drawText(0, y1-20, 20, 40,
                 QtCore.Qt.AlignVCenter | QtCore.Qt.AlignRight,
-                utils.INT2STR(p))
+                tab.utils.INT2STR(p))
 
     def draw_thetae(self, t, qp):
         '''
@@ -149,7 +147,7 @@ class backgroundThetae(QtWidgets.QFrame):
         
         '''
         ## set a new pen with a white color, thickness one, solid line
-        pen = QtGui.QPen(self.fg_color, 1, QtCore.Qt.SolidLine)
+        pen = QtGui.QPen(QtGui.QColor(WHITE), 1, QtCore.Qt.SolidLine)
         qp.setPen(pen)
         qp.setFont(self.label_font)
         ## convert theta-E to pixel values
@@ -161,7 +159,7 @@ class backgroundThetae(QtWidgets.QFrame):
         qp.drawLine(x1, self.bry+self.tpad-offset,
             x1, self.bry+self.rpad)
         qp.drawText(x1, self.bry-20, 15, 20,
-            QtCore.Qt.AlignTop | QtCore.Qt.AlignCenter, utils.INT2STR(t))
+            QtCore.Qt.AlignTop | QtCore.Qt.AlignCenter, tab.utils.INT2STR(t))
 
     def pres_to_pix(self, p):
         '''
@@ -204,10 +202,6 @@ class plotThetae(backgroundThetae):
         prof: a Profile object
         
         '''
-        self.bg_color = QtGui.QColor('#000000')
-        self.fg_color = QtGui.QColor('#ffffff')
-        self.thte_color = QtGui.QColor('#ff0000')
-
         super(plotThetae, self).__init__()
         ## set the varables for pressure and thetae
         self.prof = None
@@ -225,17 +219,6 @@ class plotThetae(backgroundThetae):
         self.plotBackground()
         self.plotData()
         self.update()
-
-    def setPreferences(self, update_gui=True, **prefs):
-        self.bg_color = QtGui.QColor(prefs['bg_color'])
-        self.fg_color = QtGui.QColor(prefs['fg_color'])
-        self.thte_color = QtGui.QColor(prefs['temp_color'])
-
-        if update_gui:
-            self.clear()
-            self.plotBackground()
-            self.plotData()
-            self.update()
 
     def resizeEvent(self, e):
         '''
@@ -296,7 +279,7 @@ class plotThetae(backgroundThetae):
         qp: QtGui.QPainter object
         
         '''
-        pen = QtGui.QPen(self.thte_color, 2)
+        pen = QtGui.QPen(QtGui.QColor(RED), 2)
         pen.setStyle(QtCore.Qt.SolidLine)
         mask1 = self.thetae.mask
         mask2 = self.pres.mask
@@ -318,9 +301,4 @@ class plotThetae(backgroundThetae):
                 qp.setPen(pen)
                 qp.drawLine(x1, y1, x2, y2)
 
-if __name__ == '__main__':
-    app_frame = QtGui.QApplication([])    
-    tester = plotThetae()
-    tester.show()    
-    app_frame.exec_()
 

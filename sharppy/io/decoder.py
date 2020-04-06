@@ -2,22 +2,12 @@
 import numpy as np
 
 import sharppy.sharptab.profile as profile
-from sutils.utils import is_py3
 
-<<<<<<< HEAD
 import urllib.request, urllib.error, urllib.parse
-=======
-try:
-    from urllib2 import urlopen
-except ImportError:
-    from urllib.request import urlopen
-import certifi
->>>>>>> bc150d10e33555001255d0c9a8e33935c21790fc
 from datetime import datetime
 import glob
 import os
 import imp
-import logging
 
 class abstract(object):
     def __init__(self, func):
@@ -34,18 +24,12 @@ _decoders = {}
 def findDecoders():
     global _decoders
 
-    level = -1 if not is_py3() else 0 
-
-    built_ins = [ 'buf_decoder', 'spc_decoder', 'pecan_decoder', 'arw_decoder', 'uwyo_decoder' ]
-    io = __import__('sharppy.io', globals(), locals(), built_ins, level)
+    built_ins = [ 'buf_decoder', 'spc_decoder', 'pecan_decoder' ]
+    io = __import__('sharppy.io', globals(), locals(), built_ins, -1)
 
     for dec in built_ins:
         # Load build-in decoders
-<<<<<<< HEAD
         print("Loading decoder '%s'." % dec)
-=======
-        logging.debug("Loading decoder '%s'." % dec)
->>>>>>> bc150d10e33555001255d0c9a8e33935c21790fc
         dec_imp = getattr(io, dec)
 
         dec_name = dec_imp.__classname__
@@ -58,11 +42,7 @@ def findDecoders():
     for dec in custom:
         # Find and load custom decoders
         dec_mod_name = os.path.basename(dec)[:-3]
-<<<<<<< HEAD
         print("Found custom decoder '%s'." % dec_mod_name)
-=======
-        logging.debug("Found custom decoder '%s'." % dec_mod_name)
->>>>>>> bc150d10e33555001255d0c9a8e33935c21790fc
         dec_imp = imp.load_source(dec_mod_name, dec)
         
         dec_name = dec_imp.__classname__
@@ -93,20 +73,15 @@ class Decoder(object):
         # I can figure out a cleaner way to make sure the file (either local or URL)
         # gets opened.
         try:
-<<<<<<< HEAD
             f = urllib.request.urlopen(self._file_name)
-=======
-            f = urlopen(self._file_name, cafile=certifi.where())
->>>>>>> bc150d10e33555001255d0c9a8e33935c21790fc
         except (ValueError, IOError):
             try:
-                fname = self._file_name[7:] if self._file_name.startswith('file://') else self._file_name
-                f = open(fname, 'rb')
+                f = open(self._file_name, 'rb')
             except IOError:
                 raise IOError("File '%s' cannot be found" % self._file_name)
         file_data = f.read()
 #       f.close() # Apparently, this multiplies the time this function takes by anywhere from 2 to 6 ... ???
-        return file_data.decode('utf-8')
+        return file_data
 
     def getProfiles(self, indexes=None):
         '''

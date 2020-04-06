@@ -1,5 +1,5 @@
 %TITLE%
-  MOT 000611/2200     
+ RUC 000611/2200F000    mot 
 
    LEVEL       HGHT       TEMP       DWPT       WDIR       WSPD
 -------------------------------------------------------------------
@@ -67,7 +67,3 @@ Mean W:          11.2 g/Kg
 ----- Lapse Rates -----
 700-500mb   19 C 	7.6 C/km
 850-500mb   34 C	7.9 C/km
-
------ Note -----
-Old Title:  RUC 000611/2200F000    mot 
-

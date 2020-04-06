@@ -1,5 +1,5 @@
 %TITLE%
-  GRK 010520/2200     
+ RUC 010520/2200F000    grk 
 
    LEVEL       HGHT       TEMP       DWPT       WDIR       WSPD
 -------------------------------------------------------------------
@@ -67,7 +67,3 @@ Mean W:          15.5 g/Kg
 ----- Lapse Rates -----
 700-500mb   17 C 	6.8 C/km
 850-500mb   31 C	7.1 C/km
-
------ Note -----
-Old Title:  RUC 010520/2200F000    grk 
-

@@ -1,5 +1,5 @@
 %TITLE%
-  GOK 991203/0100     
+ RUC 991203/0100F000    gok 
 
    LEVEL       HGHT       TEMP       DWPT       WDIR       WSPD
 -------------------------------------------------------------------
@@ -67,7 +67,3 @@ Mean W:          10.2 g/Kg
 ----- Lapse Rates -----
 700-500mb   21 C 	8.2 C/km
 850-500mb   34 C	8.1 C/km
-
------ Note -----
-Old Title:  RUC 991203/0100F000    gok 
-

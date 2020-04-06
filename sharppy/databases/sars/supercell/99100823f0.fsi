@@ -1,5 +1,5 @@
 %TITLE%
-  FSI 991008/2300     
+ RUC 991008/2300F000    fsi 
 
    LEVEL       HGHT       TEMP       DWPT       WDIR       WSPD
 -------------------------------------------------------------------
@@ -67,7 +67,3 @@ Mean W:          10.0 g/Kg
 ----- Lapse Rates -----
 700-500mb   16 C 	6.3 C/km
 850-500mb   29 C	6.8 C/km
-
------ Note -----
-Old Title:  RUC 991008/2300F000    fsi 
-

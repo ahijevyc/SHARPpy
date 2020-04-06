@@ -2,8 +2,7 @@
 
 __all__ = ['MISSING', 'ROCP', 'ZEROCNK', 'G', 'TOL', 'WHITE', 'RED',
            'ORANGE', 'YELLOW', 'MAGENTA', 'DBROWN', 'LBROWN', 'LBLUE',
-           'CYAN', 'BLACK', 'GREEN', 'DGREEN', 'HAINES_HIGH', 'HAINES_MID',
-           'HAINES_LOW']
+           'CYAN', 'BLACK']
 
 # Meteorological Constants
 MISSING = -9999.0       # Missing Flag
@@ -23,12 +22,4 @@ DBROWN = '#775000'
 LBROWN = '#996600'
 LBLUE = '#06B5FF'
 CYAN = '#00FFFF'
-GREEN = '#00FF00'
-DGREEN = '#006000'
-
-# Haines Index elevation constants for easy access
-HAINES_HIGH = 2
-HAINES_MID  = 1
-HAINES_LOW  = 0
-
 

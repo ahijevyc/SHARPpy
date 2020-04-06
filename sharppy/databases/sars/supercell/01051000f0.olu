@@ -1,5 +1,5 @@
 %TITLE%
-  OLU 010510/0000     
+ RUC 010510/0000F000    olu 
 
    LEVEL       HGHT       TEMP       DWPT       WDIR       WSPD
 -------------------------------------------------------------------
@@ -67,7 +67,3 @@ Mean W:          9.5 g/Kg
 ----- Lapse Rates -----
 700-500mb   23 C 	8.8 C/km
 850-500mb   37 C	8.6 C/km
-
------ Note -----
-Old Title:  RUC 010510/0000F000    olu 
-
