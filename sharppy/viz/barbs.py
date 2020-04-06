@@ -1,31 +1,35 @@
 import numpy as np
-from PySide import QtGui, QtCore
+from qtpy import QtGui, QtCore, QtWidgets
 import sharppy.sharptab as tab
 from sharppy.sharptab.constants import *
 
 ## routine written by Kelton Halbert
 ## keltonhalbert@ou.edu
 
-def drawFlag(path):
+def drawFlag(path, shemis=False):
+    side = -1 if shemis else 1
     pos = path.currentPosition()
-    path.lineTo(pos.x(), pos.y() + 10)
+    path.lineTo(pos.x(), pos.y() + side * 10)
     path.lineTo(pos.x() - 4, pos.y())
     path.moveTo(pos.x() - 6, pos.y())
 
-def drawFullBarb(path):
+def drawFullBarb(path, shemis=False):
+    side = -1 if shemis else 1
     pos = path.currentPosition()
-    path.lineTo(pos.x(), pos.y() + 10)
+    path.lineTo(pos.x(), pos.y() + side * 10)
     path.moveTo(pos.x() - 4, pos.y())
 
-def drawHalfBarb(path):
+def drawHalfBarb(path, shemis=False):
+    side = -1 if shemis else 1
     pos = path.currentPosition()
-    path.lineTo(pos.x(), pos.y() + 5)
+    path.lineTo(pos.x(), pos.y() + side * 5)
     path.moveTo(pos.x() - 4, pos.y())
 
-def drawBarb(qp, origin_x, origin_y, wdir, wspd, color='#FFFFFF'):
+def drawBarb(qp, origin_x, origin_y, wdir, wspd, color='#FFFFFF', shemis=False):
     pen = QtGui.QPen(QtGui.QColor(color), 1, QtCore.Qt.SolidLine)
     pen.setWidthF(1.)
     qp.setPen(pen)
+    qp.setBrush(QtCore.Qt.NoBrush)
 
     try:
         wspd = int(round(wspd / 5.) * 5) # Round to the nearest 5
@@ -42,15 +46,15 @@ def drawBarb(qp, origin_x, origin_y, wdir, wspd, color='#FFFFFF'):
         path.lineTo(25, 0)
 
         while wspd >= 50:
-            drawFlag(path)
+            drawFlag(path, shemis=shemis)
             wspd -= 50
 
         while wspd >= 10:
-            drawFullBarb(path)
+            drawFullBarb(path, shemis=shemis)
             wspd -= 10
 
         while wspd >= 5:
-            drawHalfBarb(path)
+            drawHalfBarb(path, shemis=shemis)
             wspd -= 5
 
         qp.drawPath(path)
